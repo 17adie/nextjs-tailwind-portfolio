@@ -71,7 +71,7 @@ function ProjectSection() {
     },
     {
       title: "Old Portfolio",
-      subtitle: "I created my portfolio entirely from scratch using React.js, showcasing my skills in building dynamic and responsive web applications.",
+      subtitle: "I created my portfolio using React.js, showcasing my skills in building dynamic and responsive web applications.",
       demo_link: "https://aldrinefacistol.netlify.app/",
       git_link: "https://github.com/17adie/react-js-portfolio",
       photo: ReactPortfolio,
