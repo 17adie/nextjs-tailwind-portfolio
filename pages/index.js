@@ -1,11 +1,11 @@
 import Head from "next/head"
 
-
 import NavBar from "@/components/NavBar"
 import HeroSection from "@/components/HeroSection"
 import SkillsSection from "@/components/SkillsSection"
 
 import ProjectSection from "@/components/ProjectSection"
+import ContactSection from "@/components/ContactSection"
 
 export default function Home() {
   return (
@@ -21,6 +21,7 @@ export default function Home() {
         <HeroSection />
         <SkillsSection />
         <ProjectSection />
+        <ContactSection />
       </main>
     </div>
   )

@@ -151,9 +151,7 @@ function ProjectSection() {
       <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
       <div className="max-w-7xl mx-auto">
         <div className="p-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-10">
-          <Fade cascade damping={0.1}>
-            {ProjectCards}
-          </Fade>
+          <Fade>{ProjectCards}</Fade>
         </div>
       </div>
     </section>
