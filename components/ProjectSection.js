@@ -12,6 +12,7 @@ import AddCart from "../public/projects/simple-add-to-cart.png"
 import ResortApp from "../public/projects/ResortApp-3.png"
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
+import { Fade } from "react-awesome-reveal"
 
 function ProjectSection() {
   let data = [
@@ -121,26 +122,28 @@ function ProjectSection() {
     )
 
     return (
-      <div key={i} className="max-w-xs rounded overflow-hidden shadow-lg dark:border-teal-900 dark:border-2">
-        <Image className="object-cover h-48 w-96" src={v.photo} alt={v.title} />
-        <div className="px-3 py-4">
-          <div className="flex items-baseline justify-between">
-            <div className="font-bold text-xl mb-2">{v.title} </div>
-            <div className="flex text-2xl text-teal-600">
-              <span>{v.git_link != "" ? have_git(v.git_link) : ""}</span>
-              <span className="ml-2">{v.demo_link != "" ? have_demo(v.demo_link) : ""}</span>
+      <Fade key={i} cascade damping={0.1}>
+        <div className="max-w-xs rounded overflow-hidden shadow-md dark:shadow-teal-900">
+          <Image className="object-cover h-48 w-96 rounded " src={v.photo} alt={v.title} />
+          <div className="px-3 py-4">
+            <div className="flex items-baseline justify-between">
+              <div className="font-bold text-xl mb-2">{v.title} </div>
+              <div className="flex text-2xl text-teal-600">
+                <span>{v.git_link != "" ? have_git(v.git_link) : ""}</span>
+                <span className="ml-2">{v.demo_link != "" ? have_demo(v.demo_link) : ""}</span>
+              </div>
             </div>
+            <p className="text-gray-700 text-sm dark:text-gray-500">{v.subtitle}</p>
           </div>
-          <p className="text-gray-700 text-sm dark:text-gray-500">{v.subtitle}</p>
+          <div className="px-3 py-5">
+            {v.stack.map((v, i) => (
+              <span key={i} className="text-xs inline-block bg-teal-800 text-white px-2 mr-1 mt-2 rounded row-end-auto">
+                {v}
+              </span>
+            ))}
+          </div>
         </div>
-        <div className="px-3 py-5">
-          {v.stack.map((v, i) => (
-            <span key={i} className="text-xs inline-block bg-teal-800 text-white px-2 mr-1 mt-2 rounded row-end-auto">
-              {v}
-            </span>
-          ))}
-        </div>
-      </div>
+      </Fade>
     )
   })
 
@@ -149,7 +152,7 @@ function ProjectSection() {
       <h1 className="text-2xl font-bold mb-6 text-center">My Works</h1>
       <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
       <div className="max-w-7xl mx-auto">
-        <div className="p-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">{ProjectCards}</div>
+        <div className="p-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-10">{ProjectCards}</div>
       </div>
     </section>
   )

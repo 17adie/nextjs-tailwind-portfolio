@@ -2,6 +2,7 @@ import React from "react"
 import { useState, useEffect } from "react"
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs"
 import { useTheme } from "next-themes"
+import { AttentionSeeker } from "react-awesome-reveal"
 
 function NavBar() {
   // To avoid hydration mismatch
@@ -17,9 +18,17 @@ function NavBar() {
     const currentTheme = theme === "system" ? systemTheme : theme
 
     if (currentTheme === "dark") {
-      return <BsFillSunFill className="cursor-pointer text-2xl text-white" role="button" onClick={() => setTheme("light")} />
+      return (
+        <AttentionSeeker effect="heartBeat">
+          <BsFillSunFill className="cursor-pointer text-2xl text-white" role="button" onClick={() => setTheme("light")} />
+        </AttentionSeeker>
+      )
     } else {
-      return <BsFillMoonStarsFill className="cursor-pointer text-2xl" role="button" onClick={() => setTheme("dark")} />
+      return (
+        <AttentionSeeker effect="jello">
+          <BsFillMoonStarsFill className="cursor-pointer text-2xl" role="button" onClick={() => setTheme("dark")} />
+        </AttentionSeeker>
+      )
     }
   }
 
