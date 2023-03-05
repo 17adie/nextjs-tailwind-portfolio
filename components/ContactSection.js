@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import emailjs from "@emailjs/browser"
 import { toast } from "react-toastify"
 import { Fade } from "react-awesome-reveal"
+import { ThreeDots } from "react-loading-icons"
 
 function ContactSection() {
   const [isSending, setIsSending] = useState(false)
@@ -45,6 +46,7 @@ function ContactSection() {
       <div className="container px-2 mx-auto">
         <h1 className="text-2xl font-bold mb-6 text-center">Contact me</h1>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
+
         <div className="md:w-2/3 mx-auto">
           <Fade>
             <form onSubmit={handleSubmit(sendEmail)}>
@@ -75,9 +77,7 @@ function ContactSection() {
                 </div>
                 <div className="p-2 w-full">
                   {isSending ? (
-                    <button disabled className="flex mx-auto text-white bg-gray-500 border-0 py-2 px-8 rounded text-lg">
-                      Sending
-                    </button>
+                    <ThreeDots height="12px" className="mx-auto" />
                   ) : (
                     <button type="submit" className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg">
                       Submit
