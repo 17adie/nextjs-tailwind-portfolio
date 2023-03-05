@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs"
 import { useTheme } from "next-themes"
 import { AttentionSeeker } from "react-awesome-reveal"
-
+import ScrollToTop from "../components/ScrollToTop"
 function NavBar() {
   // To avoid hydration mismatch
   const [mounted, setMounted] = useState(false)
@@ -32,17 +32,9 @@ function NavBar() {
     }
   }
 
-  //https://upmostly.com/next-js/how-to-create-a-scroll-to-top-button-in-next-js
-  const isBrowser = () => typeof window !== "undefined" //The approach recommended by Next.js
-
-  const scrollToTop = () => {
-    if (!isBrowser()) return
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
   return (
     <nav className="py-3 flex justify-between mb-5 sticky top-0 z-50 bg-white dark:bg-inherit ">
-      <h1 className="text-xl font-burtons dark:text-white cursor-pointer" onClick={scrollToTop}>
+      <h1 className="text-xl font-burtons dark:text-white cursor-pointer" onClick={() => ScrollToTop()}>
         af
       </h1>
       <ul className="flex items-center">

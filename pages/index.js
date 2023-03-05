@@ -6,6 +6,7 @@ import SkillsSection from "@/components/SkillsSection"
 
 import ProjectSection from "@/components/ProjectSection"
 import ContactSection from "@/components/ContactSection"
+import ScrollToTopButton from "@/components/ScrollToTopButton"
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <SkillsSection />
         <ProjectSection />
         <ContactSection />
+        <ScrollToTopButton />
       </main>
     </div>
   )
