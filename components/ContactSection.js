@@ -77,7 +77,7 @@ function ContactSection() {
                 </div>
                 <div className="p-2 w-full">
                   {isSending ? (
-                    <ThreeDots height="12px" className="mx-auto" />
+                    <ThreeDots height="12px" fill="#008080" className="mx-auto" />
                   ) : (
                     <button type="submit" className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg">
                       Submit
