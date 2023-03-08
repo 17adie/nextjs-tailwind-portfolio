@@ -13,9 +13,18 @@ export default function Home() {
     <div>
       <Head>
         <title>Aldrine Facistol</title>
-        <meta name="description" content="My portfolio created in NextJs and Tailwind" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="description"
+          content="My portfolio created in NextJs and Tailwind"
+        />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+        <link
+          rel="icon"
+          href="/favicon.ico"
+        />
       </Head>
       <main className="bg-white px-5 md:px-20 lg:px-40 dark:bg-gray-900">
         <NavBar />

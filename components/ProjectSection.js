@@ -10,6 +10,7 @@ import MemeGenerator from "../public/projects/meme-generator-project.png"
 import TenziesGame from "../public/projects/tenzies-game.png"
 import AddCart from "../public/projects/simple-add-to-cart.png"
 import ResortApp from "../public/projects/ResortApp-3.png"
+import NextCrud from "../public/projects/next-crud-mysql.png"
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
 import { Fade } from "react-awesome-reveal"
@@ -42,6 +43,15 @@ function ProjectSection() {
       photo: EApp,
       details: "",
       stack: ["PHP-PDO", "HTML", "Css", "JavaScript", "Bootstrap", "MySQL", "REST-API", "HighChartJs", "ChartJS", "jQuery", "SweetAlert2", "MomentJs", "DataTables"],
+    },
+    {
+      title: "NextJs CRUD App",
+      subtitle: "A simple web application that allows users to perform CRUD operations on data stored in a MySQL database. It provides four basic functionalities: Create, Read, Update, and Delete",
+      demo_link: "",
+      git_link: "https://github.com/17adie/next-simple-crud-mysql",
+      photo: NextCrud,
+      details: "",
+      stack: ["NextJs", "ReactJs", "Tailwind", "MySQL"],
     },
     {
       title: "Resort App",
@@ -110,20 +120,33 @@ function ProjectSection() {
 
   const ProjectCards = data.map((v, i) => {
     const have_git = (link) => (
-      <a href={link} target="_blank">
+      <a
+        href={link}
+        target="_blank"
+      >
         <AiFillGithub />
       </a>
     )
 
     const have_demo = (link) => (
-      <a href={link} target="_blank">
+      <a
+        href={link}
+        target="_blank"
+      >
         <AiOutlineLink />
       </a>
     )
 
     return (
-      <div key={i} className="max-w-xs h-full rounded overflow-hidden shadow-md dark:shadow-teal-900">
-        <Image className="object-cover h-48 w-96 rounded " src={v.photo} alt={v.title} />
+      <div
+        key={i}
+        className="max-w-xs h-full rounded overflow-hidden shadow-md dark:shadow-teal-900"
+      >
+        <Image
+          className="object-cover h-48 w-96 rounded "
+          src={v.photo}
+          alt={v.title}
+        />
         <div className="px-3 py-4">
           <div className="flex items-baseline justify-between">
             <div className="font-bold text-xl mb-2">{v.title} </div>
@@ -136,7 +159,10 @@ function ProjectSection() {
         </div>
         <div className="px-3 py-5">
           {v.stack.map((v, i) => (
-            <span key={i} className="text-xs inline-block bg-teal-800 text-white px-2 mr-1 mt-2 rounded row-end-auto">
+            <span
+              key={i}
+              className="text-xs inline-block bg-teal-800 text-white px-2 mr-1 mt-2 rounded row-end-auto"
+            >
               {v}
             </span>
           ))}

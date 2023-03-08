@@ -54,32 +54,62 @@ function ContactSection() {
                 <div className="p-2 w-1/2">
                   <div className="relative">
                     <label className="leading-7 text-lg text-teal-600">Name</label>
-                    <input type="text" name="user_name" placeholder="Name" {...register("user_name", { required: true })} className="w-full bg-gray-50 rounded border  focus:border-teal-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    <input
+                      type="text"
+                      name="user_name"
+                      placeholder="Name"
+                      {...register("user_name", { required: true })}
+                      className="w-full bg-gray-50 rounded border  focus:border-teal-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
                   </div>
                 </div>
                 <div className="p-2 w-1/2">
                   <div className="relative">
                     <label className="leading-7 text-lg text-teal-600">Email</label>
-                    <input type="email" name="user_email" placeholder="Email" {...register("user_email", { required: true, pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i })} className="w-full bg-gray-50 rounded border focus:border-teal-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    <input
+                      type="email"
+                      name="user_email"
+                      placeholder="Email"
+                      {...register("user_email", { required: true, pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i })}
+                      className="w-full bg-gray-50 rounded border focus:border-teal-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
                   </div>
                 </div>
                 <div className="p-2 w-full">
                   <div className="relative">
                     <label className="leading-7 text-lg text-teal-600">Subject</label>
-                    <input type="text" name="user_suect" placeholder="Subject" {...register("user_subject", { required: true })} className="w-full bg-gray-50 rounded border focus:border-teal-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    <input
+                      type="text"
+                      name="user_suect"
+                      placeholder="Subject"
+                      {...register("user_subject", { required: true })}
+                      className="w-full bg-gray-50 rounded border focus:border-teal-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
                   </div>
                 </div>
                 <div className="p-2 w-full">
                   <div className="relative">
                     <label className="leading-7 text-lg text-teal-600">Message</label>
-                    <textarea name="message" placeholder="Message" {...register("message", { required: true })} className="w-full bg-gray-50 rounded border focus:border-teal-500 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                    <textarea
+                      name="message"
+                      placeholder="Message"
+                      {...register("message", { required: true })}
+                      className="w-full bg-gray-50 rounded border focus:border-teal-500 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                    ></textarea>
                   </div>
                 </div>
                 <div className="p-2 w-full">
                   {isSending ? (
-                    <ThreeDots height="12px" fill="#008080" className="mx-auto" />
+                    <ThreeDots
+                      height="12px"
+                      fill="#008080"
+                      className="mx-auto"
+                    />
                   ) : (
-                    <button type="submit" className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg">
+                    <button
+                      type="submit"
+                      className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg"
+                    >
                       Submit
                     </button>
                   )}

@@ -12,7 +12,10 @@ function SkillsSection() {
         <div className="flex flex-wrap flex-row justify-center z-10 md:justify-center max-w-3xl mx-auto gap-1">
           {skills.map((v, i) => {
             return (
-              <p key={i} className="bg-teal-600 text-white px-2 mr-1 mt-2  rounded font-semibold">
+              <p
+                key={i}
+                className="bg-teal-600 text-white px-2 mr-1 mt-2  rounded font-semibold"
+              >
                 {v}
               </p>
             )
@@ -22,7 +25,10 @@ function SkillsSection() {
         <div className="flex flex-wrap flex-row justify-center z-10 md:justify-center max-w-3xl mx-auto gap-1">
           {basic_knowledge.map((v, i) => {
             return (
-              <p key={i} className="bg-teal-600 text-white px-2 mr-1 mt-2 rounded font-semibold">
+              <p
+                key={i}
+                className="bg-teal-600 text-white px-2 mr-1 mt-2 rounded font-semibold"
+              >
                 {v}
               </p>
             )

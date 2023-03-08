@@ -26,7 +26,11 @@ function HeroSection() {
   ]
 
   const icons = data.map((v) => (
-    <a key={v.id} href={v.link} target="_blank">
+    <a
+      key={v.id}
+      href={v.link}
+      target="_blank"
+    >
       {v.fragment}
     </a>
   ))
@@ -35,7 +39,10 @@ function HeroSection() {
     <section className="min-h-screen md:mb-10 sm:mb-16">
       <Fade cascade>
         <div className="relative mx-auto rounded-full w-60 h-60 mt-3 mb-5 overflow-hidden">
-          <Image src={dev} alt="display photo" />
+          <Image
+            src={dev}
+            alt="display photo"
+          />
         </div>
         <div className="text-center p-1">
           <h2 className="text-4xl py-2 text-teal-600 font-medium md:text-6xl lg:mt-5">Aldrine Facistol</h2>
@@ -44,7 +51,10 @@ function HeroSection() {
           <p className="text-xs py-3 leading-5 text-gray-800 md:text-lg max-w-3xl mx-auto dark:text-gray-500">As a web developer, I specialize in building interactive and visually appealing web applications. I am committed to continuously learning and improving my skills, and I enjoy the challenges and opportunities that come with creating user-friendly websites.</p>
         </div>
       </Fade>
-      <Fade direction="up" cascade>
+      <Fade
+        direction="up"
+        cascade
+      >
         <div className="text-4xl flex justify-center gap-12 pt-2 text-gray-500">{icons}</div>
       </Fade>
     </section>

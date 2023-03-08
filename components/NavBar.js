@@ -20,13 +20,21 @@ function NavBar() {
     if (currentTheme === "dark") {
       return (
         <AttentionSeeker effect="heartBeat">
-          <BsFillSunFill className="cursor-pointer text-2xl text-white" role="button" onClick={() => setTheme("light")} />
+          <BsFillSunFill
+            className="cursor-pointer text-2xl text-white"
+            role="button"
+            onClick={() => setTheme("light")}
+          />
         </AttentionSeeker>
       )
     } else {
       return (
         <AttentionSeeker effect="jello">
-          <BsFillMoonStarsFill className="cursor-pointer text-2xl" role="button" onClick={() => setTheme("dark")} />
+          <BsFillMoonStarsFill
+            className="cursor-pointer text-2xl"
+            role="button"
+            onClick={() => setTheme("dark")}
+          />
         </AttentionSeeker>
       )
     }
@@ -34,7 +42,10 @@ function NavBar() {
 
   return (
     <nav className="py-3 flex justify-between mb-5 sticky top-0 z-50 bg-white dark:bg-inherit ">
-      <h1 className="text-xl font-burtons dark:text-white cursor-pointer" onClick={() => ScrollToTop()}>
+      <h1
+        className="text-xl font-burtons dark:text-white cursor-pointer"
+        onClick={() => ScrollToTop()}
+      >
         af
       </h1>
       <ul className="flex items-center">

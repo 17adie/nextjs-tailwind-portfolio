@@ -15,7 +15,17 @@ function ScrollToTopButton() {
     })
   }, [])
 
-  return <div className="fixed bottom-0 right-0 h-16 w-16">{backToTopButton && <BsFillArrowUpSquareFill size={25} className="text-teal-500 cursor-pointer" onClick={() => ScrollToTop()} />}</div>
+  return (
+    <div className="fixed bottom-0 right-0 h-16 w-16">
+      {backToTopButton && (
+        <BsFillArrowUpSquareFill
+          size={25}
+          className="text-teal-500 cursor-pointer"
+          onClick={() => ScrollToTop()}
+        />
+      )}
+    </div>
+  )
 }
 
 export default ScrollToTopButton
