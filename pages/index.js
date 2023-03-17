@@ -26,7 +26,7 @@ export default function Home() {
           href="/favicon.ico"
         />
       </Head>
-      <main className="bg-white px-5 md:px-20 lg:px-40 dark:bg-gray-900">
+      <main className="bg-gray-100 px-5 md:px-20 lg:px-40 dark:bg-gray-900">
         <NavBar />
         <HeroSection />
         <SkillsSection />

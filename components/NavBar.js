@@ -41,7 +41,7 @@ function NavBar() {
   }
 
   return (
-    <nav className="py-3 flex justify-between mb-5 sticky top-0 z-50 bg-white dark:bg-inherit ">
+    <nav className="py-3 flex justify-between mb-5 sticky top-0 z-50 bg-gray-100 dark:bg-inherit ">
       <h1
         className="text-xl font-burtons dark:text-white cursor-pointer"
         onClick={() => ScrollToTop()}

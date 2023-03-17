@@ -140,7 +140,7 @@ function ProjectSection() {
     return (
       <div
         key={i}
-        className="max-w-xs h-full rounded overflow-hidden border-2 border-gray-100 dark:border-teal-900"
+        className="max-w-xs h-full rounded overflow-hidden bg-white border-2 border-gray-200 dark:border-teal-900 dark:bg-inherit"
       >
         <Image
           className="object-cover h-48 w-96 rounded "
