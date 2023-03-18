@@ -13,7 +13,7 @@ import ResortApp from "../public/projects/ResortApp-3.png"
 import NextCrud from "../public/projects/next-crud-mysql.png"
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
-import { Fade } from "react-awesome-reveal"
+import { Fade  } from "react-awesome-reveal"
 
 function ProjectSection() {
   let data = [
@@ -143,7 +143,7 @@ function ProjectSection() {
         className="max-w-xs h-full rounded overflow-hidden bg-white border-2 border-gray-200 dark:border-teal-900 dark:bg-inherit"
       >
         <Image
-          className="object-cover h-48 w-96 rounded "
+          className="object-cover h-48 w-96 rounded p-3"
           src={v.photo}
           alt={v.title}
         />
@@ -175,9 +175,9 @@ function ProjectSection() {
     <section className="pb-24">
       <h1 className="text-2xl font-bold mb-6 text-center">My Works</h1>
       <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
-      <div className="max-w-7xl mx-auto">
-        <div className="p-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-10">
-          <Fade>{ProjectCards}</Fade>
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-12">
+          <Fade >{ProjectCards}</Fade >
         </div>
       </div>
     </section>
