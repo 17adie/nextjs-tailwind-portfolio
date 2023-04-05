@@ -1,7 +1,7 @@
 import React from "react"
 import Image from "next/image"
-import backEnd101 from "../public/Certificates/bayanacademy-backend-web-development-101.JPG"
-import reactAdvanceScrimba from "../public/Certificates/scrimba-certificate-advanced-react.png"
+import backEnd101 from "../public/certificates/bayanacademy-backend-web-development-101.JPG"
+import reactAdvanceScrimba from "../public/certificates/scrimba-certificate-advanced-react.png"
 import Link from "next/link"
 
 function CertSection() {
@@ -20,12 +20,17 @@ function CertSection() {
 
   const certList = data.map((v, i) => {
     return (
-      <Image
+      <a
+        href={v.image.src}
         key={i}
-        className="object-cover h-60 w-80 hover:scale-110 ease-in duration-300 cursor-pointer shadow-md"
-        src={v.image}
-        alt={v.title}
-      />
+        target="_blank"
+      >
+        <Image
+          className="object-cover h-60 w-80 hover:scale-110 ease-in duration-300 cursor-pointer shadow-md"
+          src={v.image}
+          alt={v.title}
+        />
+      </a>
     )
   })
 
