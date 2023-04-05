@@ -9,7 +9,6 @@ function CertSection() {
       title: "BACK-END DEVELOPMENT 101",
       org: "Bayan Academy",
       image: backEnd101,
-      url: "",
     },
     {
       title: "Advanced React",
@@ -21,7 +20,7 @@ function CertSection() {
   const certList = data.map((v, i) => {
     return (
       <a
-        href={v.image.src}
+        href={v.image}
         key={i}
         target="_blank"
       >
