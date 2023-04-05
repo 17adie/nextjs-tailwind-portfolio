@@ -30,6 +30,7 @@ function HeroSection() {
       key={v.id}
       href={v.link}
       target="_blank"
+      className="transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-teal-600"
     >
       {v.fragment}
     </a>

@@ -7,6 +7,7 @@ import SkillsSection from "@/components/SkillsSection"
 import ProjectSection from "@/components/ProjectSection"
 import ContactSection from "@/components/ContactSection"
 import ScrollToTopButton from "@/components/ScrollToTopButton"
+import CertSection from "@/components/CertSection"
 
 export default function Home() {
   return (
@@ -31,6 +32,7 @@ export default function Home() {
         <HeroSection />
         <SkillsSection />
         <ProjectSection />
+        <CertSection />
         <ContactSection />
         <ScrollToTopButton />
       </main>
