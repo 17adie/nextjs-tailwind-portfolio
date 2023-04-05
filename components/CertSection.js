@@ -1,7 +1,7 @@
 import React from "react"
 import Image from "next/image"
-import backEnd101 from "../public/certificates/bayanacademy-backend-web-development-101.png"
-import reactAdvanceScrimba from "../public/certificates/scrimba-certificate-advanced-react.png"
+import backEnd101 from "../public/cert/bayanacademy-backend-web-development-101.png"
+import reactAdvanceScrimba from "../public/cert/scrimba-certificate-advanced-react.png"
 
 function CertSection() {
   const data = [
