@@ -1,27 +1,34 @@
 import React from "react"
 import Image from "next/image"
 import dev from "../public/dp.jpg"
-import { AiFillFacebook, AiFillLinkedin, AiFillGithub } from "react-icons/ai"
+import { AiFillFacebook, AiFillLinkedin, AiFillGithub, AiOutlineSolution } from "react-icons/ai"
 import { Fade } from "react-awesome-reveal"
+
 function HeroSection() {
   const data = [
     {
       id: 1,
-      name: "facebook",
+      name: "Facebook",
       fragment: <AiFillFacebook />,
       link: "https://www.facebook.com/17aldrn/",
     },
     {
       id: 2,
-      name: "github",
+      name: "Github",
       fragment: <AiFillGithub />,
       link: "https://github.com/17adie",
     },
     {
       id: 3,
-      name: "linkedin",
+      name: "LinkedIn",
       fragment: <AiFillLinkedin />,
       link: "https://www.linkedin.com/in/aldrinefacistol/",
+    },
+    {
+      id: 4,
+      name: "Resume",
+      fragment: <AiOutlineSolution />,
+      link: "https://drive.google.com/file/d/1zWjjplAL-33fCP4YFvyK4gqmP3N0rCJ_/view?usp=share_link",
     },
   ]
 
@@ -32,7 +39,10 @@ function HeroSection() {
       target="_blank"
       className="transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-teal-600"
     >
-      {v.fragment}
+      <span className="group relative flex justify-center">
+        {v.fragment}
+        <span className="absolute top-10 scale-0 transition-all rounded bg-gray-800 p-2 text-xs text-white w-16 text-center group-hover:scale-95">{v.name}</span>
+      </span>
     </a>
   ))
 
