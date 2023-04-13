@@ -2,6 +2,7 @@ import React from "react"
 import Image from "next/image"
 import backEnd101 from "../public/cert/bayanacademy-backend-web-development-101.png"
 import reactAdvanceScrimba from "../public/cert/scrimba-certificate-advanced-react.png"
+import javascriptProgramming from "../public/cert/javascript-programming.png"
 
 function CertSection() {
   const data = [
@@ -14,6 +15,11 @@ function CertSection() {
       title: "Advanced React",
       org: "Scrimba",
       image: reactAdvanceScrimba,
+    },
+    {
+      title: "Advanced React",
+      org: "Bayan Academy",
+      image: javascriptProgramming,
     },
   ]
 

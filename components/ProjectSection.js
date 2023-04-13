@@ -11,6 +11,7 @@ import TenziesGame from "../public/projects/tenzies-game.png"
 import AddCart from "../public/projects/simple-add-to-cart.png"
 import ResortApp from "../public/projects/ResortApp-3.png"
 import NextCrud from "../public/projects/next-crud-mysql.png"
+import JsFinalProject from "../public/projects/js-todolist-fn.png"
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
 import { Fade  } from "react-awesome-reveal"
@@ -115,6 +116,15 @@ function ProjectSection() {
       photo: AddCart,
       details: "The 'add to cart' feature found on e-commerce websites allows users to select and save products they want to buy in a virtual shopping cart, simplifying the checkout process.",
       stack: ["ReactJs"],
+    },
+    {
+      title: "Js Todo-List App",
+      subtitle: "Final Project in Javascript Programming online course in BayanAcademy.",
+      demo_link: "https://js-todo-list-fp.netlify.app/",
+      git_link: "https://github.com/17adie/js-final-project",
+      photo: JsFinalProject,
+      details: "",
+      stack: ["Javascript", "Tailwind"],
     },
   ]
 
