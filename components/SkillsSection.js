@@ -2,7 +2,7 @@ import React from "react"
 import { Fade } from "react-awesome-reveal"
 
 function SkillsSection() {
-  const skills = ["HTML", "CSS", "JavaScript", "PHP", "MySql", "Rest API", "MySql", "Stored Procedure", "Framework7", "Git", "Adobe Photoshop"]
+  const skills = ["HTML", "CSS", "JavaScript", "PHP", "MySql", "Rest API", "Bootstrap", "Stored Procedure", "Framework7", "Git", "Adobe Photoshop"]
   const basic_knowledge = ["ReactJs", "NodeJs", "ExpressJs", "MongoDB", "NextJs", "Tailwind CSS"]
   return (
     <Fade>
