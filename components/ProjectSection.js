@@ -14,7 +14,7 @@ import NextCrud from "../public/projects/next-crud-mysql.png"
 import JsFinalProject from "../public/projects/js-todolist-fn.png"
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
-import { Fade  } from "react-awesome-reveal"
+import { Fade } from "react-awesome-reveal"
 
 function ProjectSection() {
   let data = [
@@ -25,7 +25,7 @@ function ProjectSection() {
       git_link: "",
       photo: Alphalab,
       details: "",
-      stack: ["PHP-PDO", "HTML", "Css", "JavaScript", "Bootstrap", "MySQL", "REST-API", "SammyJS", "ChartJS", "jQuery", "SweetAlert2", "DataTables"],
+      stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL"],
     },
     {
       title: "ATAccess",
@@ -34,7 +34,7 @@ function ProjectSection() {
       git_link: "",
       photo: AtAccess,
       details: "",
-      stack: ["PHP", "HTML", "Css", "JavaScript", "Framework7", "MySQL", "Stored Procedure", "REST-API", "Cordova"],
+      stack: ["PHP", "HTML", "CSS", "JavaScript", "Framework7", "MySQL", "Cordova"],
     },
     {
       title: "E-APP",
@@ -43,11 +43,11 @@ function ProjectSection() {
       git_link: "https://github.com/17adie/e-app",
       photo: EApp,
       details: "",
-      stack: ["PHP-PDO", "HTML", "Css", "JavaScript", "Bootstrap", "MySQL", "REST-API", "HighChartJs", "ChartJS", "jQuery", "SweetAlert2", "MomentJs", "DataTables"],
+      stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL"],
     },
     {
       title: "NextJs CRUD App",
-      subtitle: "A simple web application that allows users to perform CRUD operations on data stored in a MySQL database. It provides four basic functionalities: Create, Read, Update, and Delete",
+      subtitle: "A simple web application that allows users to perform CRUD operations on data stored in a MySQL database. It provides four basic functionalities: Create, Read, Update, and Delete.",
       demo_link: "",
       git_link: "https://github.com/17adie/next-simple-crud-mysql",
       photo: NextCrud,
@@ -79,7 +79,7 @@ function ProjectSection() {
       git_link: "https://github.com/17adie/todo-list-php-oop",
       photo: CrudPhpOop,
       details: "",
-      stack: ["PHP-OOP", "MySql"],
+      stack: ["PHP", "MySql"],
     },
     {
       title: "Old Portfolio",
@@ -130,34 +130,23 @@ function ProjectSection() {
 
   const ProjectCards = data.map((v, i) => {
     const have_git = (link) => (
-      <a
-        href={link}
-        target="_blank"
-      >
+      <a href={link} target="_blank">
         <AiFillGithub />
       </a>
     )
 
     const have_demo = (link) => (
-      <a
-        href={link}
-        target="_blank"
-      >
+      <a href={link} target="_blank">
         <AiOutlineLink />
       </a>
     )
 
+    const gradient_color = ["#FF007F", "#FF5C4C", " #FF8933", "#FFB719", " #FFE500", " #48A71D", "#AC2C7B"]
+
     return (
-      <div
-        key={i}
-        className="transition-all max-w-xs h-full rounded overflow-hidden bg-white border-2 border-gray-200 dark:border-teal-900 dark:bg-inherit"
-      >
-        <Image
-          className="object-cover h-48 w-96 rounded p-3 hover:scale-110 ease-in duration-200"
-          src={v.photo}
-          alt={v.title}
-        />
-        <div className="px-3 py-4">
+      <div key={i} className="transition-all max-w-xs h-full rounded overflow-hidden bg-white dark:bg-gray-800 relative">
+        <Image className="object-cover h-48 w-96 rounded p-3 hover:scale-110 ease-in duration-200" src={v.photo} alt={v.title} />
+        <div className="px-3 py-4 mb-16">
           <div className="flex items-baseline justify-between">
             <div className="font-bold text-xl mb-2">{v.title} </div>
             <div className="flex text-2xl text-teal-600">
@@ -167,13 +156,10 @@ function ProjectSection() {
           </div>
           <p className="text-gray-700 text-sm dark:text-gray-500">{v.subtitle}</p>
         </div>
-        <div className="px-3 py-5">
+        <div className="px-3 py-1 pb-2 absolute bottom-0 left-0 right-0">
           {v.stack.map((v, i) => (
-            <span
-              key={i}
-              className="text-xs inline-block bg-teal-800 text-white px-2 mr-1 mt-2 rounded row-end-auto"
-            >
-              {v}
+            <span key={i} className="text-xs inline-block text-white mr-2 mt-2  row-end-auto" style={{ color: gradient_color[i] }}>
+              #{v}
             </span>
           ))}
         </div>
@@ -182,12 +168,12 @@ function ProjectSection() {
   })
 
   return (
-    <section className="pb-24">
+    <section className="mb-20">
       <h1 className="text-2xl font-bold mb-6 text-center">My Works</h1>
       <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
       <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-12">
-          <Fade >{ProjectCards}</Fade >
+        <div className="mt-5 flex flex-wrap gap-7 justify-center">
+          <Fade>{ProjectCards}</Fade>
         </div>
       </div>
     </section>
