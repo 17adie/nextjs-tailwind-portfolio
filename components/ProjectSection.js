@@ -12,12 +12,22 @@ import AddCart from "../public/projects/simple-add-to-cart.png"
 import ResortApp from "../public/projects/ResortApp-3.png"
 import NextCrud from "../public/projects/next-crud-mysql.png"
 import JsFinalProject from "../public/projects/js-todolist-fn.png"
+import BlogPost from "../public/projects/blog-project.png"
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
 import { Fade } from "react-awesome-reveal"
 
 function ProjectSection() {
   let data = [
+    {
+      title: "Blog Post",
+      subtitle: "My first VITE + MERN (MongoDB, ExpressJs, ReactJs, NodeJs) project: a blog with user accounts, where you can easily add, update, and delete posts.",
+      demo_link: "",
+      git_link: "https://github.com/17adie/mern-blog-project",
+      photo: BlogPost,
+      details: "",
+      stack: ["MongoDB", "ExpressJs", "ReactJs", "NodeJs", "Vite", "Tailwind CSS", "jwt"],
+    },
     {
       title: "ARMS",
       subtitle: "ARMS is a record management system for water samples. It monitors the status of water tests, whether they are ongoing or completed and ready for release. It also has a Sales and Payment module that allows you to monitor the sales and payments of your customers.",
