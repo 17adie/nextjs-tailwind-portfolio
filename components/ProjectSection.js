@@ -22,7 +22,7 @@ function ProjectSection() {
     {
       title: "Blog Post",
       subtitle: "My first VITE + MERN (MongoDB, ExpressJs, ReactJs, NodeJs) project: a blog with user accounts, where you can easily add, update, and delete posts.",
-      demo_link: "",
+      demo_link: "https://mern-blog-client-ljra.onrender.com",
       git_link: "https://github.com/17adie/mern-blog-project",
       photo: BlogPost,
       details: "",
