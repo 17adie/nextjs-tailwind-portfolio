@@ -17,6 +17,7 @@ import MongoDB from "../public/image/mongodb.png"
 import Firebase from "../public/image/firebase.png"
 import AdobePS from "../public/image/adobeps.png"
 import Git from "../public/image/git.png"
+import Php from "../public/image/php.png"
 
 function SkillsSection() {
   const tech_stack_obj = [
@@ -37,66 +38,71 @@ function SkillsSection() {
     },
     {
       id: 4,
+      name: "PHP",
+      img: Php,
+    },
+    {
+      id: 5,
       name: "ReactJs",
       img: ReactJs,
     },
     {
-      id: 5,
+      id: 6,
       name: "ExpressJs",
       img: ExpressJs,
     },
     {
-      id: 6,
+      id: 7,
       name: "NodeJs",
       img: NodeJs,
     },
     {
-      id: 7,
+      id: 8,
       name: "NextJs",
       img: NextJs,
     },
     {
-      id: 8,
+      id: 9,
       name: "VueJs",
       img: VueJs,
     },
     {
-      id: 9,
+      id: 10,
       name: "Framework7",
       img: Framework7,
     },
     {
-      id: 10,
+      id: 11,
       name: "Bootstrap",
       img: Bootstrap,
     },
     {
-      id: 11,
+      id: 12,
       name: "Tailwind",
       img: Tailwind,
     },
     {
-      id: 12,
+      id: 13,
       name: "MySql",
       img: MySql,
     },
     {
-      id: 13,
+      id: 14,
       name: "MongoDB",
       img: MongoDB,
     },
     {
-      id: 14,
+      id: 15,
       name: "Firebase",
       img: Firebase,
     },
     {
-      id: 15,
+      id: 16,
       name: "Photoshop",
       img: AdobePS,
     },
     {
-      id: 16,
+      id: 17,
       name: "Git",
       img: Git,
     },
