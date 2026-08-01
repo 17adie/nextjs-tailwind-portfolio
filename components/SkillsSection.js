@@ -124,7 +124,7 @@ function SkillsSection() {
   return (
     <Fade>
       <section className="mb-20">
-        <h1 className="text-2xl font-bold mb-6 text-center">Tech Stack</h1>
+        <h2 className="text-2xl font-bold mb-6 text-center">Tech Stack</h2>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
         <div className="flex flex-wrap flex-row justify-center z-10 md:justify-center max-w-5xl mx-auto gap-10">{tech_stack}</div>
         {/* <div className="flex flex-wrap flex-row justify-center z-10 md:justify-center max-w-3xl mx-auto gap-1">

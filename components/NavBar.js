@@ -42,12 +42,14 @@ function NavBar() {
 
   return (
     <nav className="py-3 flex justify-between mb-5 sticky top-0 z-50 bg-inherit">
-      <h1
+      <button
+        type="button"
+        aria-label="Scroll back to top"
         className="text-xl font-burtons dark:text-white cursor-pointer"
         onClick={() => ScrollToTop()}
       >
         af
-      </h1>
+      </button>
       <ul className="flex items-center">
         <li>{renderThemeChanger()}</li>
         {/* <li>
