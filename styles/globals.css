@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  /* Tailwind 3.2 predates the core line-clamp utilities. Named clamp-* rather than
+     line-clamp-* so it won't collide if the framework is upgraded later. */
+  .clamp-4 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+  }
+}
+
 @font-face {
   font-family: "Burtons";
   src: url("../public/Burtons.otf");
