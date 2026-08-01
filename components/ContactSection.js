@@ -1,9 +1,16 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useForm } from "react-hook-form"
 import emailjs from "@emailjs/browser"
 import { toast } from "react-toastify"
 import { Fade } from "react-awesome-reveal"
 import { ThreeDots } from "react-loading-icons"
+import ReCAPTCHA from "react-google-recaptcha"
+import { useTheme } from "next-themes"
+
+// When unset the form still works, just without the captcha — that keeps local dev
+// running before the key exists. EmailJS rejects the send if the template requires
+// verification, so a missing key in production fails loudly rather than silently.
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 const baseField =
   "w-full bg-gray-50 rounded border text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -22,6 +29,16 @@ function FieldError({ id, error }) {
 
 function ContactSection() {
   const [isSending, setIsSending] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState(null)
+  const [mounted, setMounted] = useState(false)
+  const recaptchaRef = useRef(null)
+  const { resolvedTheme } = useTheme()
+
+  // The widget is client-only; rendering it after mount avoids a hydration mismatch
+  // on the theme prop (same reason NavBar defers its theme toggle).
+  useEffect(() => setMounted(true), [])
+
+  const captchaRequired = Boolean(RECAPTCHA_SITE_KEY)
 
   const {
     register,
@@ -31,10 +48,22 @@ function ContactSection() {
   } = useForm()
 
   const sendEmail = async (formData) => {
+    if (captchaRequired && !captchaToken) {
+      toast.error("Please confirm you're not a robot.", { toastId: "contact-captcha" })
+      return
+    }
+
     setIsSending(true)
 
     try {
-      await emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE, formData, process.env.NEXT_PUBLIC_EMAILJS_USER)
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE,
+        // EmailJS verifies this token with Google server-side, so it also blocks
+        // requests that skip the form and hit the API directly.
+        captchaRequired ? { ...formData, "g-recaptcha-response": captchaToken } : formData,
+        process.env.NEXT_PUBLIC_EMAILJS_USER
+      )
       toast.success("Message sent! I'll get back to you soon.", { toastId: "contact-success" })
       reset()
     } catch (error) {
@@ -53,6 +82,14 @@ function ContactSection() {
     } finally {
       // Runs on both paths, so the Submit button always comes back
       setIsSending(false)
+
+      // reCAPTCHA tokens are single-use and expire after ~2 minutes, so the widget
+      // has to be cleared after every attempt — including failures, otherwise a
+      // retry would resend a token Google has already consumed.
+      if (captchaRequired) {
+        recaptchaRef.current?.reset()
+        setCaptchaToken(null)
+      }
     }
   }
 
@@ -139,6 +176,18 @@ function ContactSection() {
                     <FieldError id="message_error" error={errors.message} />
                   </div>
                 </div>
+                {captchaRequired && mounted && (
+                  <div className="p-2 w-full flex justify-center">
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey={RECAPTCHA_SITE_KEY}
+                      theme={resolvedTheme === "dark" ? "dark" : "light"}
+                      onChange={setCaptchaToken}
+                      onExpired={() => setCaptchaToken(null)}
+                      onErrored={() => setCaptchaToken(null)}
+                    />
+                  </div>
+                )}
                 <div className="p-2 w-full">
                   {isSending ? (
                     <ThreeDots
@@ -149,7 +198,8 @@ function ContactSection() {
                   ) : (
                     <button
                       type="submit"
-                      className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg"
+                      disabled={captchaRequired && !captchaToken}
+                      className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
                     >
                       Submit
                     </button>
