@@ -8,6 +8,7 @@ import ProjectSection from "@/components/ProjectSection"
 import ContactSection from "@/components/ContactSection"
 import ScrollToTopButton from "@/components/ScrollToTopButton"
 import CertSection from "@/components/CertSection"
+import Footer from "@/components/Footer"
 
 const SITE_URL = "https://aldrinefacistol.vercel.app"
 const TITLE = "Aldrine Facistol — Full-Stack Developer"
@@ -66,6 +67,7 @@ export default function Home() {
         <ContactSection />
         <ScrollToTopButton />
       </main>
+      <Footer />
     </div>
   )
 }

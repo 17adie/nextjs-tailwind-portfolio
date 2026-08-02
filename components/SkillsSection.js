@@ -155,7 +155,7 @@ function Pills({ items, tone = "teal" }) {
 
 function SkillsSection() {
   return (
-    <SectionShell tone="b">
+    <SectionShell tone="b" id="tech-stack">
       <Fade>
         <h2 className="text-2xl font-bold mb-6 text-center">Tech Stack</h2>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>

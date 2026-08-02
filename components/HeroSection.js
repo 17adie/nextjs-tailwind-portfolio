@@ -3,7 +3,7 @@ import SectionShell from "./SectionShell"
 import Image from "next/image";
 import dev from "../public/dp.jpg";
 import { AiFillFacebook, AiFillLinkedin, AiFillGithub, AiOutlineSolution } from "react-icons/ai";
-import { MdOutlineMail } from "react-icons/md";
+import { MdOutlineMail, MdKeyboardArrowDown } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
 
 function HeroSection() {
@@ -73,6 +73,18 @@ function HeroSection() {
       <Fade direction="up" cascade>
         <div className="text-4xl flex justify-center gap-12 pt-2 text-gray-500">{icons}</div>
       </Fade>
+
+      {/* Pinned to the bottom of the full-height hero. It's a real anchor, not just a
+          decoration, so clicking it goes somewhere. motion-safe keeps the bounce away
+          from visitors who asked the OS to reduce motion. */}
+      <a
+        href="#tech-stack"
+        aria-label="Scroll to Tech Stack"
+        className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-gray-400 transition hover:text-teal-600 dark:text-gray-500"
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
+        <MdKeyboardArrowDown className="text-2xl motion-safe:animate-bounce" />
+      </a>
     </SectionShell>
   );
 }

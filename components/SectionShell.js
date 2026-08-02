@@ -11,7 +11,9 @@ const TONES = {
 function SectionShell({ tone = "a", fullHeight = false, id, children }) {
   // fullHeight fills the first screen exactly: 100vh minus the navbar, which is
   // sticky and therefore still occupies space in normal flow above this section.
-  const fill = fullHeight ? "flex items-center min-h-[calc(100vh_-_var(--nav-h))]" : ""
+  // `relative` gives a full-height section a positioning context, so a child can be
+  // pinned to the bottom of the screen (the hero's scroll cue).
+  const fill = fullHeight ? "relative flex items-center min-h-[calc(100vh_-_var(--nav-h))]" : ""
 
   // scroll-mt offsets anchor jumps by the navbar height, otherwise the sticky bar
   // sits on top of the heading the visitor just jumped to.
