@@ -186,7 +186,7 @@ function ProjectSection() {
       git_link: "",
       photos: [{ src: Alphalab }, { src: ArmsAccounting, caption: "Accounting dashboard" }, { src: ArmsParameters, caption: "Test parameters setup" }],
       details: "",
-      stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL"],
+      stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL", "SammyJs"],
     },
     {
       title: "ATAccess",
@@ -214,15 +214,6 @@ function ProjectSection() {
       photos: [{ src: NextCrud }],
       details: "",
       stack: ["NextJs", "ReactJs", "Tailwind", "MySQL"],
-    },
-    {
-      title: "Tenzies Game",
-      subtitle: "Project-based learning with Scrimba",
-      demo_link: "https://tenzies-game-reactjs-project.netlify.app/",
-      git_link: "https://github.com/17adie/tenzies-game-reactjs",
-      photos: [{ src: TenziesGame }],
-      details: "Tenzi is a dice game where the objective is to roll dice until all of them show the same value, and players can select and 'freeze' individual dice to keep their current value between rolls.",
-      stack: ["ReactJs"],
     },
   ];
 
