@@ -84,7 +84,18 @@ function ProjectCard({ project }) {
   return (
     <div className="transition-all max-w-xs h-full rounded overflow-hidden bg-white dark:bg-gray-800 relative">
       <button type="button" onClick={() => setLightboxIndex(0)} aria-label={`View ${project.title} screenshots`} className="group relative block w-full cursor-pointer overflow-hidden">
-        <Image className="object-cover h-48 w-96 rounded p-3 group-hover:scale-110 ease-in duration-200" src={cover.src} alt={project.title} />
+        {/* The zoom lives on this wrapper, not the <Image>, so the scrim is scaled by
+            the same transform — on the image itself the gradient stayed put while the
+            picture grew out from under it. */}
+        <div className="relative transition duration-200 ease-in group-hover:scale-110">
+          <Image className="object-cover h-48 w-96 rounded p-3" src={cover.src} alt={project.title} />
+          {/* Inset by 3 to match the image's own p-3, so it covers the picture rather
+              than the card padding around it. Square corners on purpose: padding on an
+              <img> insets the picture but border-radius applies to the border box, so
+              the visible picture has sharp corners — a rounded scrim curved away from
+              them and let an undimmed white sliver show through. */}
+          <span className="pointer-events-none absolute inset-x-3 top-3 h-24 bg-gradient-to-b from-black/60 via-black/25 to-transparent" />
+        </div>
         {photos.length > 1 && <span className="absolute bottom-4 right-4 rounded bg-black/60 px-2 py-0.5 text-xs font-medium text-white">1 / {photos.length}</span>}
       </button>
       <div className="px-3 py-4 mb-16">
