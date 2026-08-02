@@ -1,6 +1,7 @@
 import React from "react"
 import Image from "next/image"
 import { Fade } from "react-awesome-reveal"
+import SectionShell from "./SectionShell"
 
 import Html5 from "../public/image/html5.png"
 import Css from "../public/image/css.png"
@@ -113,7 +114,7 @@ function Tile({ item, compact }) {
 
 function Group({ label, hint, children }) {
   return (
-    <section className="rounded-2xl border border-gray-200 bg-white/70 p-5 sm:p-6 dark:border-gray-700/60 dark:bg-gray-800/40">
+    <section className="rounded-2xl border border-gray-200 bg-gray-50 p-5 sm:p-6 dark:border-gray-700/60 dark:bg-gray-900/50">
       <div className="mb-5 flex flex-wrap items-baseline gap-x-2 gap-y-1">
         <h3 className="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400">{label}</h3>
         {hint && <span className="text-xs text-gray-500 dark:text-gray-500">{hint}</span>}
@@ -154,8 +155,8 @@ function Pills({ items, tone = "teal" }) {
 
 function SkillsSection() {
   return (
-    <Fade>
-      <section className="mb-20">
+    <SectionShell tone="b">
+      <Fade>
         <h2 className="text-2xl font-bold mb-6 text-center">Tech Stack</h2>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
 
@@ -184,8 +185,8 @@ function SkillsSection() {
             <Pills items={aiTools} tone="gray" />
           </Group>
         </div>
-      </section>
-    </Fade>
+      </Fade>
+    </SectionShell>
   )
 }
 

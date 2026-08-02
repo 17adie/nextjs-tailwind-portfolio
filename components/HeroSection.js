@@ -1,4 +1,5 @@
 import React from "react";
+import SectionShell from "./SectionShell"
 import Image from "next/image";
 import dev from "../public/dp.jpg";
 import { AiFillFacebook, AiFillLinkedin, AiFillGithub, AiOutlineSolution } from "react-icons/ai";
@@ -42,7 +43,7 @@ function HeroSection() {
   ));
 
   return (
-    <section className="mb-20">
+    <SectionShell tone="a" fullHeight>
       <Fade cascade>
         <div className="relative mx-auto rounded-full w-60 h-60 mt-3 mb-5 overflow-hidden">
           <Image src={dev} alt="display photo" />
@@ -57,7 +58,7 @@ function HeroSection() {
       <Fade direction="up" cascade>
         <div className="text-4xl flex justify-center gap-12 pt-2 text-gray-500">{icons}</div>
       </Fade>
-    </section>
+    </SectionShell>
   );
 }
 

@@ -41,7 +41,7 @@ function NavBar() {
   }
 
   return (
-    <nav className="py-3 flex justify-between mb-5 sticky top-0 z-50 bg-inherit">
+    <nav className="py-3 flex justify-between sticky top-0 z-50 bg-gray-100 dark:bg-gray-900 px-5 md:px-20 lg:px-40">
       <button
         type="button"
         aria-label="Scroll back to top"
