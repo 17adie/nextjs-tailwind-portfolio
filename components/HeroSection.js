@@ -1,7 +1,7 @@
 import React from "react";
 import SectionShell from "./SectionShell"
 import Image from "next/image";
-import dev from "../public/dp.jpg";
+import dev from "../public/dp2.png";
 import { AiFillFacebook, AiFillLinkedin, AiFillGithub, AiOutlineSolution } from "react-icons/ai";
 import { MdOutlineMail, MdKeyboardArrowDown } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
