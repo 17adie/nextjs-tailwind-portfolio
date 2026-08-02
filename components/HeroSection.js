@@ -58,7 +58,7 @@ function HeroSection() {
   ));
 
   return (
-    <SectionShell tone="a" fullHeight>
+    <SectionShell tone="a" fullHeight id="home">
       <Fade cascade>
         <div className="relative mx-auto rounded-full w-60 h-60 mt-3 mb-5 overflow-hidden">
           <Image src={dev} alt="display photo" />

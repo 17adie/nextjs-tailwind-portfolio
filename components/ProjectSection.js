@@ -232,7 +232,7 @@ function ProjectSection() {
   const ProjectCards = data.map((v, i) => <ProjectCard key={i} project={v} />);
 
   return (
-    <SectionShell tone="a">
+    <SectionShell tone="a" id="works">
       <h2 className="text-2xl font-bold mb-6 text-center">My Works</h2>
       <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
       <div className="max-w-5xl mx-auto">

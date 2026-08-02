@@ -41,7 +41,7 @@ function CertSection() {
   })
 
   return (
-    <SectionShell tone="b">
+    <SectionShell tone="b" id="certificates">
       <div className="container px-2 mx-auto">
         <h2 className="text-2xl font-bold mb-6 text-center">My Certificates</h2>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
