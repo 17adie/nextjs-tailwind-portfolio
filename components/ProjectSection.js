@@ -1,99 +1,90 @@
-import React, { useState, useEffect, useRef } from "react"
-import Image from "next/image"
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 // Gallery screenshots. To add another shot to a project, drop the file in the
 // matching public/projects/<name>/ folder, import it here, and append it to that
 // project's `photos` array. photos[0] is what the card shows.
-import HrisDashboard from "../public/projects/hris/01-dashboard.png"
-import HrisProfile from "../public/projects/hris/02-employee-profile.png"
-import HrisCalendar from "../public/projects/hris/03-hr-calendar.png"
-import HrisLogin from "../public/projects/hris/04-login.png"
+import HrisDashboard from "../public/projects/hris/01-dashboard.png";
+import HrisProfile from "../public/projects/hris/02-employee-profile.png";
+import HrisCalendar from "../public/projects/hris/03-hr-calendar.png";
+import HrisLogin from "../public/projects/hris/04-login.png";
 
-import PtoDashboard from "../public/projects/pto-cei/01-client-dashboard.png"
-import PtoLogin from "../public/projects/pto-cei/02-login.png"
-import PtoRegistration from "../public/projects/pto-cei/03-registration.png"
-import PtoRecovery from "../public/projects/pto-cei/04-account-recovery.png"
+import PtoDashboard from "../public/projects/pto-cei/01-client-dashboard.png";
+import PtoLogin from "../public/projects/pto-cei/02-login.png";
+import PtoRegistration from "../public/projects/pto-cei/03-registration.png";
+import PtoRecovery from "../public/projects/pto-cei/04-account-recovery.png";
 
-import FabDashboard from "../public/projects/tsi-fabrication/01-dashboard.png"
-import FabLogin from "../public/projects/tsi-fabrication/02-login.png"
-import FabRegistration from "../public/projects/tsi-fabrication/03-registration.png"
-import FabUnitRegistration from "../public/projects/tsi-fabrication/04-unit-registration.png"
+import FabDashboard from "../public/projects/tsi-fabrication/01-dashboard.png";
+import FabLogin from "../public/projects/tsi-fabrication/02-login.png";
+import FabRegistration from "../public/projects/tsi-fabrication/03-registration.png";
+import FabUnitRegistration from "../public/projects/tsi-fabrication/04-unit-registration.png";
 
-import AepDashboard from "../public/projects/aep-system/01-dashboard.png"
+import AepDashboard from "../public/projects/aep-system/01-dashboard.png";
 
-import ArmsAccounting from "../public/projects/arms/01-accounting-dashboard.png"
-import ArmsParameters from "../public/projects/arms/02-parameters.png"
+import ArmsAccounting from "../public/projects/arms/01-accounting-dashboard.png";
+import ArmsParameters from "../public/projects/arms/02-parameters.png";
 
-import Alphalab from "../public/projects/alphalab.png"
-import AtAccess from "../public/projects/ataccess-telemed-app.png"
-import EApp from "../public/projects/eapp.png"
-import QrCodeGenerator from "../public/projects/qr-code-generator.png"
-import CrudPhpOop from "../public/projects/crud-php-oop.png"
-import ReactPortfolio from "../public/projects/my-portfolio.png"
-import MemeGenerator from "../public/projects/meme-generator-project.png"
-import TenziesGame from "../public/projects/tenzies-game.png"
-import AddCart from "../public/projects/simple-add-to-cart.png"
-import ResortApp from "../public/projects/ResortApp-3.png"
-import NextCrud from "../public/projects/next-crud-mysql.png"
-import JsFinalProject from "../public/projects/js-todolist-fn.png"
-import BlogPost from "../public/projects/blog-project.png"
+import Alphalab from "../public/projects/alphalab.png";
+import AtAccess from "../public/projects/ataccess-telemed-app.png";
+import EApp from "../public/projects/eapp.png";
+import QrCodeGenerator from "../public/projects/qr-code-generator.png";
+import CrudPhpOop from "../public/projects/crud-php-oop.png";
+import ReactPortfolio from "../public/projects/my-portfolio.png";
+import MemeGenerator from "../public/projects/meme-generator-project.png";
+import TenziesGame from "../public/projects/tenzies-game.png";
+import AddCart from "../public/projects/simple-add-to-cart.png";
+import ResortApp from "../public/projects/ResortApp-3.png";
+import NextCrud from "../public/projects/next-crud-mysql.png";
+import JsFinalProject from "../public/projects/js-todolist-fn.png";
+import BlogPost from "../public/projects/blog-project.png";
 
-import { AiFillGithub, AiOutlineLink } from "react-icons/ai"
-import { Fade } from "react-awesome-reveal"
-import Lightbox from "./Lightbox"
+import { AiFillGithub, AiOutlineLink } from "react-icons/ai";
+import { Fade } from "react-awesome-reveal";
+import Lightbox from "./Lightbox";
 
 // Cycled per stack tag; wraps so a project can list more tags than there are colors
-const gradient_color = ["#FF007F", "#FF5C4C", "#FF8933", "#FFB719", "#FFE500", "#48A71D", "#AC2C7B"]
+const gradient_color = ["#FF007F", "#FF5C4C", "#FF8933", "#FFB719", "#FFE500", "#48A71D", "#AC2C7B"];
 
 function ProjectCard({ project }) {
-  const [expanded, setExpanded] = useState(false)
-  const [isTruncated, setIsTruncated] = useState(false)
-  const [lightboxIndex, setLightboxIndex] = useState(null)
-  const textRef = useRef(null)
+  const [expanded, setExpanded] = useState(false);
+  const [isTruncated, setIsTruncated] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const textRef = useRef(null);
 
-  const photos = project.photos
-  const cover = photos[0]
+  const photos = project.photos;
+  const cover = photos[0];
 
   // Show "See more" only when the text is genuinely being cut off, so short
   // descriptions don't get a toggle that reveals nothing. Measured rather than
   // guessed from character count, so it stays correct when the copy is edited.
   useEffect(() => {
-    const el = textRef.current
-    if (!el || expanded) return
+    const el = textRef.current;
+    if (!el || expanded) return;
 
-    const measure = () => setIsTruncated(el.scrollHeight > el.clientHeight + 1)
-    measure()
+    const measure = () => setIsTruncated(el.scrollHeight > el.clientHeight + 1);
+    measure();
 
-    window.addEventListener("resize", measure)
-    return () => window.removeEventListener("resize", measure)
-  }, [expanded])
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [expanded]);
 
   const have_git = (link) => (
     <a href={link} target="_blank" rel="noopener noreferrer">
       <AiFillGithub />
     </a>
-  )
+  );
 
   const have_demo = (link) => (
     <a href={link} target="_blank" rel="noopener noreferrer">
       <AiOutlineLink />
     </a>
-  )
+  );
 
   return (
     <div className="transition-all max-w-xs h-full rounded overflow-hidden bg-white dark:bg-gray-800 relative">
-      <button
-        type="button"
-        onClick={() => setLightboxIndex(0)}
-        aria-label={`View ${project.title} screenshots`}
-        className="group relative block w-full cursor-pointer overflow-hidden"
-      >
+      <button type="button" onClick={() => setLightboxIndex(0)} aria-label={`View ${project.title} screenshots`} className="group relative block w-full cursor-pointer overflow-hidden">
         <Image className="object-cover h-48 w-96 rounded p-3 group-hover:scale-110 ease-in duration-200" src={cover.src} alt={project.title} />
-        {photos.length > 1 && (
-          <span className="absolute bottom-4 right-4 rounded bg-black/60 px-2 py-0.5 text-xs font-medium text-white">
-            1 / {photos.length}
-          </span>
-        )}
+        {photos.length > 1 && <span className="absolute bottom-4 right-4 rounded bg-black/60 px-2 py-0.5 text-xs font-medium text-white">1 / {photos.length}</span>}
       </button>
       <div className="px-3 py-4 mb-16">
         <div className="flex items-baseline justify-between">
@@ -108,12 +99,7 @@ function ProjectCard({ project }) {
           {project.subtitle}
         </p>
         {(isTruncated || expanded) && (
-          <button
-            type="button"
-            onClick={() => setExpanded((prev) => !prev)}
-            aria-expanded={expanded}
-            className="mt-1 text-xs font-semibold text-teal-600 hover:text-teal-500 focus:outline-none"
-          >
+          <button type="button" onClick={() => setExpanded((prev) => !prev)} aria-expanded={expanded} className="mt-1 text-xs font-semibold text-teal-600 hover:text-teal-500 focus:outline-none">
             {expanded ? "See less" : "See more"}
           </button>
         )}
@@ -126,25 +112,16 @@ function ProjectCard({ project }) {
         ))}
       </div>
 
-      {lightboxIndex !== null && (
-        <Lightbox
-          photos={photos}
-          title={project.title}
-          index={lightboxIndex}
-          onIndexChange={setLightboxIndex}
-          onClose={() => setLightboxIndex(null)}
-        />
-      )}
+      {lightboxIndex !== null && <Lightbox photos={photos} title={project.title} index={lightboxIndex} onIndexChange={setLightboxIndex} onClose={() => setLightboxIndex(null)} />}
     </div>
-  )
+  );
 }
 
 function ProjectSection() {
   let data = [
     {
       title: "HRIS",
-      subtitle:
-        "Human Resource Information System built from scratch with a 2-developer team for a government regional office of ~400 employees. Covers employee records, leave, overtime and CTO filing, multi-level approval routing, and employee self-service across 13+ modules.",
+      subtitle: "Human Resource Information System built from scratch with a 2-developer team for a government regional office of ~400 employees. Covers employee records, leave, overtime and CTO filing, multi-level approval routing, and employee self-service across 13+ modules.",
       demo_link: "",
       git_link: "",
       photos: [
@@ -154,12 +131,11 @@ function ProjectSection() {
         { src: HrisLogin, caption: "Sign in" },
       ],
       details: "Layered backend (MVC + Services + DTO + Middleware) exposing a REST API to a JavaScript SPA, with role-based access control, CSRF protection, rate limiting, and Server-Sent Events for live-updating approval dashboards.",
-      stack: ["PHP", "Slim 4", "MySQL", "JavaScript", "REST API", "SPA", "RBAC", "SSE"],
+      stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "REST API", "SPA", "RBAC", "SSE", "Cron Job"],
     },
     {
       title: "PTO-CEI Online Certification",
-      subtitle:
-        "Replaced a hand-prepared certification process with one-click issuance, plus a client-facing portal where applicants have their own accounts to submit requests and track status in real time.",
+      subtitle: "Digitized the end-to-end certification workflow, replacing a largely manual process with a centralized system that manages application submission, evaluator and inspector assignment, system-generated inspection authorities, on-site inspection reporting, compliance review, order of payment generation, certificate approval, and automated certificate issuance. Built a client portal where applicants can submit requests, monitor real-time application status, and receive approved certificates via email. Implemented QR code verification for certificate authenticity, enabling anyone to validate the legitimacy of issued certificates instantly.",
       demo_link: "",
       git_link: "",
       photos: [
@@ -169,22 +145,20 @@ function ProjectSection() {
         { src: PtoRecovery, caption: "Account recovery" },
       ],
       details: "",
-      stack: ["PHP", "MySQL", "JavaScript", "Bootstrap", "TCPDF"],
+      stack: ["PHP", "MySQL", "PDO", "JavaScript", "Bootstrap", "TCPDF", "SPA"],
     },
     {
       title: "AEP Processing System",
-      subtitle:
-        "Full-stack system for Alien Employment Permit processing, replacing legacy paper forms with automated validation, structured data handling, and reporting. Maintained in production.",
+      subtitle: "Full-stack system for Alien Employment Permit processing, replacing legacy paper forms with automated validation, structured data handling, and reporting. Maintained in production.",
       demo_link: "",
       git_link: "",
       photos: [{ src: AepDashboard, caption: "Dashboard" }],
       details: "",
-      stack: ["PHP", "MySQL", "JavaScript", "REST API"],
+      stack: ["PHP", "MySQL", "PDO", "JavaScript", "Bootstrap", "TCPDF", "SPA"],
     },
     {
       title: "TSI Fabrication Online System",
-      subtitle:
-        "Built from scratch to replace a fully manual process, with an online application and digital evaluation workflow and certificates auto-generated and emailed on approval.",
+      subtitle: "Built from scratch to replace a fully manual process, with an online application and digital evaluation workflow and certificates auto-generated and emailed on approval.",
       demo_link: "",
       git_link: "",
       photos: [
@@ -194,7 +168,7 @@ function ProjectSection() {
         { src: FabUnitRegistration, caption: "Unit registration" },
       ],
       details: "",
-      stack: ["PHP", "MySQL", "JavaScript", "Cron Job"],
+      stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "SPA", "Bootstrap", "TCPDF"],
     },
     {
       title: "Blog Post",
@@ -207,15 +181,10 @@ function ProjectSection() {
     },
     {
       title: "ARMS",
-      subtitle:
-        "Record management system for water sample testing, tracking each test from ongoing through completed and ready for release. Includes a Sales and Payments module for monitoring customer transactions, plus an accounting module converted from the lab's legacy desktop accounting software and customized to Alpha's own workflow.",
+      subtitle: "Record management system for water sample testing, tracking each test from ongoing through completed and ready for release. Includes a Sales and Payments module for monitoring customer transactions, plus an accounting module converted from the lab's legacy desktop accounting software and customized to Alpha's own workflow.",
       demo_link: "",
       git_link: "",
-      photos: [
-        { src: Alphalab },
-        { src: ArmsAccounting, caption: "Accounting dashboard" },
-        { src: ArmsParameters, caption: "Test parameters setup" },
-      ],
+      photos: [{ src: Alphalab }, { src: ArmsAccounting, caption: "Accounting dashboard" }, { src: ArmsParameters, caption: "Test parameters setup" }],
       details: "",
       stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL"],
     },
@@ -246,51 +215,6 @@ function ProjectSection() {
       details: "",
       stack: ["NextJs", "ReactJs", "Tailwind", "MySQL"],
     },
-    // {
-    //   title: "Resort App",
-    //   subtitle: "Final Project in Backend101 online course. Simple CRUD app using NodeJs",
-    //   demo_link: "",
-    //   git_link: "https://github.com/17adie/ResortApp",
-    //   photo: ResortApp,
-    //   details: "",
-    //   stack: ["NodeJs", "ExpressJs", "EJS", "Bootstrap", "MongoDB"],
-    // },
-    // {
-    //   title: "QR Code",
-    //   subtitle: "QR Code Generator",
-    //   demo_link: "https://reactjs-qrcode-generator.netlify.app/",
-    //   git_link: "https://github.com/17adie/react-qr-code-generator",
-    //   photo: QrCodeGenerator,
-    //   details: "",
-    //   stack: ["ReactJs", "QR-Code API", "CSS Modules"],
-    // },
-    // {
-    //   title: "Todo List App",
-    //   subtitle: "A simple todo list app using Object-Oriented Programming (OOP) allows users to create, edit, and delete tasks that they need to complete.",
-    //   demo_link: "",
-    //   git_link: "https://github.com/17adie/todo-list-php-oop",
-    //   photo: CrudPhpOop,
-    //   details: "",
-    //   stack: ["PHP", "MySql"],
-    // },
-    // {
-    //   title: "Old Portfolio",
-    //   subtitle: "I created my portfolio using React.js, showcasing my skills in building dynamic and responsive web applications.",
-    //   demo_link: "https://aldrinefacistol.netlify.app/",
-    //   git_link: "https://github.com/17adie/react-js-portfolio",
-    //   photo: ReactPortfolio,
-    //   details: "",
-    //   stack: ["ReactJs", "CSS Modules"],
-    // },
-    // {
-    //   title: "Meme Generator",
-    //   subtitle: "Project-based learning with Scrimba",
-    //   demo_link: "https://react-meme-generator-project.netlify.app/",
-    //   git_link: "https://github.com/17adie/react-meme-generator",
-    //   photo: MemeGenerator,
-    //   details: "",
-    //   stack: ["ReactJs", "CSS Modules"],
-    // },
     {
       title: "Tenzies Game",
       subtitle: "Project-based learning with Scrimba",
@@ -300,27 +224,9 @@ function ProjectSection() {
       details: "Tenzi is a dice game where the objective is to roll dice until all of them show the same value, and players can select and 'freeze' individual dice to keep their current value between rolls.",
       stack: ["ReactJs"],
     },
-    // {
-    //   title: "Add to Cart",
-    //   subtitle: "Project-based learning with Scrimba",
-    //   demo_link: "https://simple-add-to-cart-reactjs.netlify.app/",
-    //   git_link: "https://github.com/17adie/reactjs-addtocart-project",
-    //   photo: AddCart,
-    //   details: "The 'add to cart' feature found on e-commerce websites allows users to select and save products they want to buy in a virtual shopping cart, simplifying the checkout process.",
-    //   stack: ["ReactJs"],
-    // },
-    // {
-    //   title: "Js Todo-List App",
-    //   subtitle: "Final Project in Javascript Programming online course in BayanAcademy.",
-    //   demo_link: "https://js-todo-list-fp.netlify.app/",
-    //   git_link: "https://github.com/17adie/js-final-project",
-    //   photo: JsFinalProject,
-    //   details: "",
-    //   stack: ["Javascript", "Tailwind"],
-    // },
-  ]
+  ];
 
-  const ProjectCards = data.map((v, i) => <ProjectCard key={i} project={v} />)
+  const ProjectCards = data.map((v, i) => <ProjectCard key={i} project={v} />);
 
   return (
     <section className="mb-20">
@@ -332,7 +238,7 @@ function ProjectSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default ProjectSection
+export default ProjectSection;
