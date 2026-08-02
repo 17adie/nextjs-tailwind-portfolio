@@ -1,20 +1,12 @@
 import React from "react"
 import { useState, useEffect } from "react"
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs"
-import { MdMenu, MdClose, MdOutlineHome, MdCode, MdWorkOutline, MdSchool, MdOutlineMail } from "react-icons/md"
+import { MdMenu, MdClose } from "react-icons/md"
 import { useTheme } from "next-themes"
 import { AttentionSeeker } from "react-awesome-reveal"
 import ScrollToTop from "../components/ScrollToTop"
+import { NAV_LINKS } from "../data/sections"
 
-// Each target is a SectionShell with a matching id, which also supplies the
-// scroll-mt offset so the sticky bar doesn't cover the heading on arrival.
-const NAV_LINKS = [
-  { href: "#home", label: "Home", Icon: MdOutlineHome },
-  { href: "#tech-stack", label: "Tech Stack", Icon: MdCode },
-  { href: "#works", label: "Works", Icon: MdWorkOutline },
-  { href: "#certificates", label: "Certificates", Icon: MdSchool },
-  { href: "#contact", label: "Contact", Icon: MdOutlineMail },
-]
 
 function NavBar() {
   // To avoid hydration mismatch
@@ -42,7 +34,7 @@ function NavBar() {
   // on every frame and force a layout read per section; the observer only wakes when a
   // boundary crosses the band below.
   useEffect(() => {
-    const sections = NAV_LINKS.map((l) => document.getElementById(l.href.slice(1))).filter(Boolean)
+    const sections = NAV_LINKS.map((l) => document.getElementById(l.id)).filter(Boolean)
     if (!sections.length) return
 
     const observer = new IntersectionObserver(
@@ -110,12 +102,12 @@ function NavBar() {
         {/* Full links appear at lg, not md: five icon+label pairs plus the logo and
             toggle do not fit inside the md padding without wrapping. */}
         <ul className="hidden lg:flex items-center gap-7">
-          {NAV_LINKS.map(({ href, label, Icon }) => {
-            const isActive = activeId === href.slice(1)
+          {NAV_LINKS.map(({ id, label, Icon }) => {
+            const isActive = activeId === id
             return (
-              <li key={href}>
+              <li key={id}>
                 <a
-                  href={href}
+                  href={`#${id}`}
                   aria-current={isActive ? "true" : undefined}
                   className={`flex items-center gap-1.5 text-sm font-medium transition ${
                     isActive ? "text-teal-600 dark:text-teal-400" : "text-gray-600 hover:text-teal-600 dark:text-gray-300 dark:hover:text-teal-400"
@@ -150,12 +142,12 @@ function NavBar() {
           id="mobile-menu"
           className="absolute left-0 right-0 top-full lg:hidden border-t border-gray-200 bg-gray-100 px-5 pb-3 shadow-lg dark:border-gray-700/60 dark:bg-gray-900"
         >
-          {NAV_LINKS.map(({ href, label, Icon }) => {
-            const isActive = activeId === href.slice(1)
+          {NAV_LINKS.map(({ id, label, Icon }) => {
+            const isActive = activeId === id
             return (
-              <li key={href}>
+              <li key={id}>
                 <a
-                  href={href}
+                  href={`#${id}`}
                   onClick={() => setMenuOpen(false)}
                   aria-current={isActive ? "true" : undefined}
                   className={`flex items-center gap-3 py-3 text-sm font-medium transition ${
