@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Height of the sticky navbar (py-3 + its tallest child). The hero subtracts this
+     so its first screen ends exactly at the fold instead of overflowing by the nav. */
+  --nav-h: 3.25rem;
+}
+
+/* Anchor links glide instead of jumping — but never for visitors who have asked
+   the OS to reduce motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @layer utilities {
   /* Tailwind 3.2 predates the core line-clamp utilities. Named clamp-* rather than
      line-clamp-* so it won't collide if the framework is upgraded later. */

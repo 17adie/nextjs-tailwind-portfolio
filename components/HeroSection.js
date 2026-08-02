@@ -1,7 +1,9 @@
 import React from "react";
+import SectionShell from "./SectionShell"
 import Image from "next/image";
-import dev from "../public/dp.jpg";
+import dev from "../public/dp2.png";
 import { AiFillFacebook, AiFillLinkedin, AiFillGithub, AiOutlineSolution } from "react-icons/ai";
+import { MdOutlineMail, MdKeyboardArrowDown } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
 
 function HeroSection() {
@@ -30,19 +32,33 @@ function HeroSection() {
       fragment: <AiOutlineSolution />,
       link: "/Aldrine-Facistol-Resume.pdf",
     },
+    {
+      id: 5,
+      name: "Get in touch",
+      fragment: <MdOutlineMail />,
+      link: "#contact",
+      // Same-page anchor, so it must not open a tab the way the others do
+      internal: true,
+    },
   ];
 
   const icons = data.map((v) => (
-    <a key={v.id} href={v.link} target="_blank" className="transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-teal-600">
+    <a
+      key={v.id}
+      href={v.link}
+      target={v.internal ? undefined : "_blank"}
+      rel={v.internal ? undefined : "noopener noreferrer"}
+      className="transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-teal-600"
+    >
       <span className="group relative flex justify-center">
         {v.fragment}
-        <span className="absolute top-10 scale-0 transition-all rounded bg-gray-800 p-2 text-xs text-white text-center group-hover:scale-95">{v.name}</span>
+        <span className="absolute top-10 scale-0 whitespace-nowrap transition-all rounded bg-gray-800 p-2 text-xs text-white text-center group-hover:scale-95">{v.name}</span>
       </span>
     </a>
   ));
 
   return (
-    <section className="mb-20">
+    <SectionShell tone="a" fullHeight id="home">
       <Fade cascade>
         <div className="relative mx-auto rounded-full w-60 h-60 mt-3 mb-5 overflow-hidden">
           <Image src={dev} alt="display photo" />
@@ -57,7 +73,19 @@ function HeroSection() {
       <Fade direction="up" cascade>
         <div className="text-4xl flex justify-center gap-12 pt-2 text-gray-500">{icons}</div>
       </Fade>
-    </section>
+
+      {/* Pinned to the bottom of the full-height hero. It's a real anchor, not just a
+          decoration, so clicking it goes somewhere. motion-safe keeps the bounce away
+          from visitors who asked the OS to reduce motion. */}
+      <a
+        href="#tech-stack"
+        aria-label="Scroll to Tech Stack"
+        className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-gray-400 transition hover:text-teal-600 dark:text-gray-500"
+      >
+        <span className="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
+        <MdKeyboardArrowDown className="text-2xl motion-safe:animate-bounce" />
+      </a>
+    </SectionShell>
   );
 }
 

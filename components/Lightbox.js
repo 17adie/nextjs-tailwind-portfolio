@@ -1,13 +1,23 @@
-import React, { useEffect, useRef, useCallback } from "react"
+import React, { useEffect, useRef, useState, useCallback } from "react"
 import { createPortal } from "react-dom"
 import Image from "next/image"
 import { MdClose, MdChevronLeft, MdChevronRight } from "react-icons/md"
+import { Oval } from "react-loading-icons"
 
 // Modal image carousel. Rendered only while open, so the keyboard and scroll-lock
 // effects tear down automatically on close.
 function Lightbox({ photos, title, index, onIndexChange, onClose }) {
   const count = photos.length
   const closeRef = useRef(null)
+
+  // Remembered per index rather than a single boolean, so returning to an image
+  // already fetched shows it immediately instead of flashing the spinner again.
+  const [loaded, setLoaded] = useState({})
+  const isLoading = !loaded[index]
+  const markLoaded = useCallback((i) => setLoaded((prev) => ({ ...prev, [i]: true })), [])
+
+  // Neighbours of the current frame, for prefetching
+  const neighbours = count > 1 ? [...new Set([(index + 1) % count, (index - 1 + count) % count])].filter((i) => i !== index) : []
 
   const go = useCallback(
     (delta) => onIndexChange((index + delta + count) % count),
@@ -54,9 +64,11 @@ function Lightbox({ photos, title, index, onIndexChange, onClose }) {
         <MdClose />
       </button>
 
-      <div className="mb-2 text-center text-white">
+      {/* min-h reserves the caption line: not every photo has one, and without it the
+          whole frame shifts up a line when navigating to an uncaptioned image. */}
+      <div className="mb-2 min-h-[3.25rem] text-center text-white">
         <p className="text-lg font-semibold">{title}</p>
-        {current.caption && <p className="text-sm text-gray-300">{current.caption}</p>}
+        <p className="text-sm text-gray-300">{current.caption || " "}</p>
       </div>
 
       {/* Clicking the image itself must not close the overlay */}
@@ -72,12 +84,26 @@ function Lightbox({ photos, title, index, onIndexChange, onClose }) {
           </button>
         )}
 
-        <Image
-          src={current.src}
-          alt={`${title} — ${current.caption || "screenshot"}`}
-          className="max-h-[75vh] w-auto rounded object-contain"
-          priority
-        />
+        {/* Fixed-height frame: without it the box resizes to each image's aspect ratio,
+            so the arrows jump between frames and the spinner has no stable position. */}
+        <div className="relative flex h-[75vh] min-w-0 flex-1 items-center justify-center">
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center" role="status" aria-live="polite">
+              <Oval stroke="#14b8a6" strokeWidth={4} height="48" width="48" />
+              <span className="sr-only">Loading image</span>
+            </div>
+          )}
+
+          <Image
+            key={index}
+            src={current.src}
+            alt={`${title} — ${current.caption || "screenshot"}`}
+            className={`max-h-full w-auto rounded object-contain transition-opacity duration-200 ${isLoading ? "opacity-0" : "opacity-100"}`}
+            onLoadingComplete={() => markLoaded(index)}
+            onError={() => markLoaded(index)}
+            priority
+          />
+        </div>
 
         {count > 1 && (
           <button
@@ -89,6 +115,15 @@ function Lightbox({ photos, title, index, onIndexChange, onClose }) {
             <MdChevronRight />
           </button>
         )}
+      </div>
+
+      {/* Warms the next and previous frames so navigation is instant rather than
+          waiting on a fresh fetch each time. Zero-sized and hidden from a11y;
+          `priority` is required because a 0x0 box never triggers lazy loading. */}
+      <div className="pointer-events-none absolute h-0 w-0 overflow-hidden" aria-hidden="true">
+        {neighbours.map((i) => (
+          <Image key={i} src={photos[i].src} alt="" priority onLoadingComplete={() => markLoaded(i)} />
+        ))}
       </div>
 
       {count > 1 && (

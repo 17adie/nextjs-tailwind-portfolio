@@ -8,6 +8,7 @@ import ProjectSection from "@/components/ProjectSection"
 import ContactSection from "@/components/ContactSection"
 import ScrollToTopButton from "@/components/ScrollToTopButton"
 import CertSection from "@/components/CertSection"
+import Footer from "@/components/Footer"
 
 const SITE_URL = "https://aldrinefacistol.vercel.app"
 const TITLE = "Aldrine Facistol — Full-Stack Developer"
@@ -57,7 +58,7 @@ export default function Home() {
           href="/favicon.ico"
         />
       </Head>
-      <main className="transition-all bg-gray-100 px-5 md:px-20 lg:px-40 dark:bg-gray-900">
+      <main className="transition-all bg-gray-100 dark:bg-gray-900">
         <NavBar />
         <HeroSection />
         <SkillsSection />
@@ -66,6 +67,7 @@ export default function Home() {
         <ContactSection />
         <ScrollToTopButton />
       </main>
+      <Footer />
     </div>
   )
 }

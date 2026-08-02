@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
+import SectionShell from "./SectionShell"
 import { useForm } from "react-hook-form"
 import emailjs from "@emailjs/browser"
 import { toast } from "react-toastify"
@@ -6,6 +7,7 @@ import { Fade } from "react-awesome-reveal"
 import { ThreeDots } from "react-loading-icons"
 import ReCAPTCHA from "react-google-recaptcha"
 import { useTheme } from "next-themes"
+import { MdSend } from "react-icons/md"
 
 // When unset the form still works, just without the captcha — that keeps local dev
 // running before the key exists. EmailJS rejects the send if the template requires
@@ -13,15 +15,28 @@ import { useTheme } from "next-themes"
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 const baseField =
-  "w-full bg-gray-50 rounded border text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+  "w-full rounded-lg border bg-gray-50 px-4 py-3 text-sm outline-none transition text-gray-900 placeholder:text-gray-400 dark:bg-gray-900/50 dark:text-gray-100 dark:placeholder:text-gray-500"
 
 // Red border while a field is invalid so the message below it has something to point at
-const fieldClass = (hasError) => `${baseField} ${hasError ? "border-red-500 focus:border-red-500" : "focus:border-teal-500"}`
+const fieldClass = (hasError) =>
+  `${baseField} ${
+    hasError
+      ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+      : "border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 dark:border-gray-700"
+  }`
+
+function Label({ htmlFor, children }) {
+  return (
+    <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+      {children}
+    </label>
+  )
+}
 
 function FieldError({ id, error }) {
   if (!error) return null
   return (
-    <p id={id} className="mt-1 text-sm text-red-600">
+    <p id={id} className="mt-1.5 text-xs text-red-600 dark:text-red-400">
       {error.message}
     </p>
   )
@@ -94,123 +109,115 @@ function ContactSection() {
   }
 
   return (
-    <section className="pb-10">
-      <div className="container px-2 mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-center">Contact me</h2>
-        <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
+    <SectionShell tone="a" id="contact">
+      <h2 className="text-2xl font-bold mb-6 text-center">Contact me</h2>
+      <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
 
-        <div className="md:w-2/3 mx-auto">
-          <Fade>
-            <form onSubmit={handleSubmit(sendEmail)} noValidate>
-              <div className="flex flex-wrap -m-2">
-                <div className="p-2 w-full md:w-1/2">
-                  <div className="relative">
-                    <label htmlFor="user_name" className="leading-7 text-lg text-teal-600">
-                      Name
-                    </label>
-                    <input
-                      id="user_name"
-                      type="text"
-                      placeholder="Name"
-                      aria-invalid={errors.user_name ? "true" : "false"}
-                      aria-describedby={errors.user_name ? "user_name_error" : undefined}
-                      {...register("user_name", { required: "Please enter your name." })}
-                      className={fieldClass(errors.user_name)}
-                    />
-                    <FieldError id="user_name_error" error={errors.user_name} />
-                  </div>
-                </div>
-                <div className="p-2 w-full md:w-1/2">
-                  <div className="relative">
-                    <label htmlFor="user_email" className="leading-7 text-lg text-teal-600">
-                      Email
-                    </label>
-                    <input
-                      id="user_email"
-                      type="email"
-                      placeholder="Email"
-                      aria-invalid={errors.user_email ? "true" : "false"}
-                      aria-describedby={errors.user_email ? "user_email_error" : undefined}
-                      {...register("user_email", {
-                        required: "Please enter your email address.",
-                        pattern: {
-                          value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
-                          message: "That doesn't look like a valid email address.",
-                        },
-                      })}
-                      className={fieldClass(errors.user_email)}
-                    />
-                    <FieldError id="user_email_error" error={errors.user_email} />
-                  </div>
-                </div>
-                <div className="p-2 w-full">
-                  <div className="relative">
-                    <label htmlFor="user_subject" className="leading-7 text-lg text-teal-600">
-                      Subject
-                    </label>
-                    <input
-                      id="user_subject"
-                      type="text"
-                      placeholder="Subject"
-                      aria-invalid={errors.user_subject ? "true" : "false"}
-                      aria-describedby={errors.user_subject ? "user_subject_error" : undefined}
-                      {...register("user_subject", { required: "Please add a subject." })}
-                      className={fieldClass(errors.user_subject)}
-                    />
-                    <FieldError id="user_subject_error" error={errors.user_subject} />
-                  </div>
-                </div>
-                <div className="p-2 w-full">
-                  <div className="relative">
-                    <label htmlFor="message" className="leading-7 text-lg text-teal-600">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      placeholder="Message"
-                      aria-invalid={errors.message ? "true" : "false"}
-                      aria-describedby={errors.message ? "message_error" : undefined}
-                      {...register("message", { required: "Please write a message." })}
-                      className={`${fieldClass(errors.message)} h-32 resize-none leading-6`}
-                    ></textarea>
-                    <FieldError id="message_error" error={errors.message} />
-                  </div>
-                </div>
-                {captchaRequired && mounted && (
-                  <div className="p-2 w-full flex justify-center">
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      sitekey={RECAPTCHA_SITE_KEY}
-                      theme={resolvedTheme === "dark" ? "dark" : "light"}
-                      onChange={setCaptchaToken}
-                      onExpired={() => setCaptchaToken(null)}
-                      onErrored={() => setCaptchaToken(null)}
-                    />
-                  </div>
-                )}
-                <div className="p-2 w-full">
-                  {isSending ? (
-                    <ThreeDots
-                      height="12px"
-                      fill="#008080"
-                      className="mx-auto"
-                    />
-                  ) : (
-                    <button
-                      type="submit"
-                      disabled={captchaRequired && !captchaToken}
-                      className="flex mx-auto text-white bg-teal-500 border-0 py-2 px-8 focus:outline-none hover:bg-teal-600 rounded text-lg disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
-                    >
-                      Submit
-                    </button>
-                  )}
-                </div>
+      <Fade>
+        {/* Same panel treatment as the Tech Stack groups: rounded-2xl, hairline border,
+            one step lighter than the section tone underneath it. */}
+        <div className="mx-auto mt-8 max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 dark:border-gray-700/60 dark:bg-gray-800/40">
+          <form onSubmit={handleSubmit(sendEmail)} noValidate className="space-y-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="user_name">Your Name</Label>
+                <input
+                  id="user_name"
+                  type="text"
+                  placeholder="Juan Dela Cruz"
+                  aria-invalid={errors.user_name ? "true" : "false"}
+                  aria-describedby={errors.user_name ? "user_name_error" : undefined}
+                  {...register("user_name", { required: "Please enter your name." })}
+                  className={fieldClass(errors.user_name)}
+                />
+                <FieldError id="user_name_error" error={errors.user_name} />
               </div>
-            </form>
-          </Fade>
+
+              <div>
+                <Label htmlFor="user_email">Your Email</Label>
+                <input
+                  id="user_email"
+                  type="email"
+                  placeholder="juan@company.com"
+                  aria-invalid={errors.user_email ? "true" : "false"}
+                  aria-describedby={errors.user_email ? "user_email_error" : undefined}
+                  {...register("user_email", {
+                    required: "Please enter your email address.",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i,
+                      message: "That doesn't look like a valid email address.",
+                    },
+                  })}
+                  className={fieldClass(errors.user_email)}
+                />
+                <FieldError id="user_email_error" error={errors.user_email} />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="user_subject">Subject</Label>
+              <input
+                id="user_subject"
+                type="text"
+                placeholder="Project inquiry"
+                aria-invalid={errors.user_subject ? "true" : "false"}
+                aria-describedby={errors.user_subject ? "user_subject_error" : undefined}
+                {...register("user_subject", { required: "Please add a subject." })}
+                className={fieldClass(errors.user_subject)}
+              />
+              <FieldError id="user_subject_error" error={errors.user_subject} />
+            </div>
+
+            <div>
+              <Label htmlFor="message">Message</Label>
+              <textarea
+                id="message"
+                placeholder="Hi Aldrine, I'm reaching out about..."
+                aria-invalid={errors.message ? "true" : "false"}
+                aria-describedby={errors.message ? "message_error" : undefined}
+                {...register("message", { required: "Please write a message." })}
+                className={`${fieldClass(errors.message)} h-36 resize-none leading-6`}
+              ></textarea>
+              <FieldError id="message_error" error={errors.message} />
+            </div>
+
+            {captchaRequired && mounted && (
+              <div className="flex justify-center">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={RECAPTCHA_SITE_KEY}
+                  theme={resolvedTheme === "dark" ? "dark" : "light"}
+                  onChange={setCaptchaToken}
+                  onExpired={() => setCaptchaToken(null)}
+                  onErrored={() => setCaptchaToken(null)}
+                />
+              </div>
+            )}
+
+            {/* The spinner sits inside the button rather than replacing it, so the
+                layout doesn't jump the moment you submit. */}
+            <button
+              type="submit"
+              disabled={isSending || (captchaRequired && !captchaToken)}
+              className="flex min-h-[3rem] w-full items-center justify-center gap-2 rounded-lg bg-teal-500 px-6 py-3 font-semibold text-white transition hover:bg-teal-600 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:hover:bg-gray-400"
+            >
+              {isSending ? (
+                <>
+                  <ThreeDots height="14px" fill="#fff" />
+                  {/* The dots carry no text, so keep a label for screen readers */}
+                  <span className="sr-only">Sending</span>
+                </>
+              ) : (
+                <>
+                  <MdSend className="text-lg" />
+                  Send Message
+                </>
+              )}
+            </button>
+          </form>
         </div>
-      </div>
-    </section>
+      </Fade>
+    </SectionShell>
   )
 }
 
