@@ -1,91 +1,13 @@
 import React from "react"
 import Image from "next/image"
 import { Fade } from "react-awesome-reveal"
+import { BsCodeSlash } from "react-icons/bs"
+import { CORE, ALSOUSE, LEARNING, CONCEPTS, TOOLS, AITOOLS } from "../data/skills"
 import SectionShell from "./SectionShell"
-
-import Html5 from "../public/image/html5.png"
-import Css from "../public/image/css.png"
-import JavaScript from "../public/image/js.png"
-import ReactJs from "../public/image/reactjs.png"
-import ExpressJs from "../public/image/expressjs.png"
-import NodeJs from "../public/image/nodejs.png"
-import NextJs from "../public/image/nextjs.png"
-import VueJs from "../public/image/vuejs.png"
-import Framework7 from "../public/image/framework7.png"
-import Bootstrap from "../public/image/bootstrap.png"
-import Tailwind from "../public/image/tailwind.png"
-import MySql from "../public/image/mysql.png"
-import MongoDB from "../public/image/mongodb.png"
-import Firebase from "../public/image/firebase.png"
-import AdobePS from "../public/image/adobeps.png"
-import Git from "../public/image/git.png"
-import Php from "../public/image/php.png"
+import { SECTIONS } from "../data/sections";
 
 // Vector marks for the stack entries that have no PNG in public/image.
 // react-icons is already a dependency, so this adds no new package.
-import { SiLaravel, SiJquery, SiPostman, SiApachecordova, SiComposer, SiNpm, SiGithub } from "react-icons/si"
-import { BsCodeSlash } from "react-icons/bs"
-
-// Grouped by how much of it is actually shipped work, mirroring the resume's own
-// split. A flat grid implied equal depth across everything, which overstated the
-// "currently learning" entries.
-const core = [
-  { name: "PHP", img: Php },
-  { name: "Slim 4", className: "text-teal-600 dark:text-teal-500" },
-  { name: "JavaScript", img: JavaScript },
-  { name: "MySQL", img: MySql },
-  { name: "HTML5", img: Html5 },
-  { name: "CSS3", img: Css },
-]
-
-const alsoUse = [
-  { name: "ReactJs", img: ReactJs },
-  { name: "NodeJs", img: NodeJs },
-  { name: "ExpressJs", img: ExpressJs },
-  { name: "NextJs", img: NextJs },
-  { name: "jQuery", icon: SiJquery, color: "#0769AD" },
-  { name: "Tailwind", img: Tailwind },
-  { name: "Bootstrap", img: Bootstrap },
-  { name: "MongoDB", img: MongoDB },
-  { name: "Firebase", img: Firebase },
-  { name: "Framework7", img: Framework7 },
-  { name: "Cordova", icon: SiApachecordova, className: "text-gray-600 dark:text-gray-300" },
-]
-
-const learning = [
-  { name: "Laravel", icon: SiLaravel, color: "#FF2D20" },
-  { name: "VueJs", img: VueJs },
-  { name: "Inertia.js", className: "text-teal-600 dark:text-teal-500" },
-]
-
-// No logos exist for these, and they are the strongest signal on the resume —
-// architecture and platform work rather than framework familiarity.
-const concepts = [
-  "REST APIs",
-  "Single-Page Applications",
-  "OOP",
-  "MVC",
-  "Role-Based Access Control",
-  "Server-Sent Events",
-  "WebRTC",
-  "Stored Procedures",
-  "Cron Jobs",
-]
-
-// Rendered as text rather than logos: only OpenAI has a brand mark in the icon set,
-// so a logo row would be three identical fallback glyphs.
-const aiTools = ["ChatGPT", "Claude", "GitHub Copilot", "Codex"]
-
-// Deliberately monochrome and smaller — a secondary tier that shouldn't compete
-// with the stack above it.
-const tools = [
-  { name: "Git", img: Git },
-  { name: "GitHub", icon: SiGithub },
-  { name: "Composer", icon: SiComposer },
-  { name: "npm", icon: SiNpm },
-  { name: "Postman", icon: SiPostman },
-  { name: "Photoshop", img: AdobePS },
-]
 
 function Tile({ item, compact }) {
   // Entries with no brand mark anywhere (Slim, Inertia) fall back to a code glyph so
@@ -155,34 +77,34 @@ function Pills({ items, tone = "teal" }) {
 
 function SkillsSection() {
   return (
-    <SectionShell tone="b" id="tech-stack">
+    <SectionShell tone="b" id={SECTIONS.techStack.id}>
       <Fade>
         <h2 className="text-2xl font-bold mb-6 text-center">Tech Stack</h2>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
 
         <div className="mx-auto mt-8 max-w-4xl space-y-4">
           <Group label="Core" hint="what I build with daily">
-            <TileGrid items={core} />
+            <TileGrid items={CORE} />
           </Group>
 
           <Group label="Also work with">
-            <TileGrid items={alsoUse} />
+            <TileGrid items={ALSOUSE} />
           </Group>
 
           <Group label="Currently learning">
-            <TileGrid items={learning} />
+            <TileGrid items={LEARNING} />
           </Group>
 
           <Group label="Concepts & practices">
-            <Pills items={concepts} />
+            <Pills items={CONCEPTS} />
           </Group>
 
           <Group label="Tools">
-            <TileGrid items={tools} compact />
+            <TileGrid items={TOOLS} compact />
           </Group>
 
           <Group label="AI-assisted development">
-            <Pills items={aiTools} tone="gray" />
+            <Pills items={AITOOLS} tone="gray" />
           </Group>
         </div>
       </Fade>

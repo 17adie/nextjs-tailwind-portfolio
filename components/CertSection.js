@@ -1,30 +1,12 @@
 import React from "react"
 import SectionShell from "./SectionShell"
+import { SECTIONS } from "../data/sections";
+import { CERTIFICATES } from "../data/certificates"
 import Image from "next/image"
-import backEnd101 from "../public/cert/bayanacademy-backend-web-development-101.png"
-import reactAdvanceScrimba from "../public/cert/scrimba-certificate-advanced-react.png"
-import javascriptProgramming from "../public/cert/javascript-programming.png"
 
 function CertSection() {
-  const data = [
-    {
-      title: "BACK-END DEVELOPMENT 101",
-      org: "Bayan Academy",
-      image: backEnd101,
-    },
-    {
-      title: "Advanced React",
-      org: "Scrimba",
-      image: reactAdvanceScrimba,
-    },
-    {
-      title: "Advanced React",
-      org: "Bayan Academy",
-      image: javascriptProgramming,
-    },
-  ]
 
-  const certList = data.map((v, i) => {
+  const certList = CERTIFICATES.map((v, i) => {
     return (
       <a
         href={v.image.src}
@@ -41,7 +23,7 @@ function CertSection() {
   })
 
   return (
-    <SectionShell tone="b" id="certificates">
+    <SectionShell tone="b" id={SECTIONS.certificates.id}>
       <div className="container px-2 mx-auto">
         <h2 className="text-2xl font-bold mb-6 text-center">My Certificates</h2>
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>

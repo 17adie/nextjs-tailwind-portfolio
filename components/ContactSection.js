@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import SectionShell from "./SectionShell"
+import { SECTIONS } from "../data/sections";
 import { useForm } from "react-hook-form"
 import emailjs from "@emailjs/browser"
 import { toast } from "react-toastify"
@@ -109,7 +110,7 @@ function ContactSection() {
   }
 
   return (
-    <SectionShell tone="a" id="contact">
+    <SectionShell tone="a" id={SECTIONS.contact.id}>
       <h2 className="text-2xl font-bold mb-6 text-center">Contact me</h2>
       <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
 
