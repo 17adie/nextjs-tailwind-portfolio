@@ -3,6 +3,7 @@ import SectionShell from "./SectionShell"
 import Image from "next/image";
 import dev from "../public/dp.jpg";
 import { AiFillFacebook, AiFillLinkedin, AiFillGithub, AiOutlineSolution } from "react-icons/ai";
+import { MdOutlineMail } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
 
 function HeroSection() {
@@ -31,13 +32,27 @@ function HeroSection() {
       fragment: <AiOutlineSolution />,
       link: "/Aldrine-Facistol-Resume.pdf",
     },
+    {
+      id: 5,
+      name: "Get in touch",
+      fragment: <MdOutlineMail />,
+      link: "#contact",
+      // Same-page anchor, so it must not open a tab the way the others do
+      internal: true,
+    },
   ];
 
   const icons = data.map((v) => (
-    <a key={v.id} href={v.link} target="_blank" className="transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-teal-600">
+    <a
+      key={v.id}
+      href={v.link}
+      target={v.internal ? undefined : "_blank"}
+      rel={v.internal ? undefined : "noopener noreferrer"}
+      className="transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:text-teal-600"
+    >
       <span className="group relative flex justify-center">
         {v.fragment}
-        <span className="absolute top-10 scale-0 transition-all rounded bg-gray-800 p-2 text-xs text-white text-center group-hover:scale-95">{v.name}</span>
+        <span className="absolute top-10 scale-0 whitespace-nowrap transition-all rounded bg-gray-800 p-2 text-xs text-white text-center group-hover:scale-95">{v.name}</span>
       </span>
     </a>
   ));
