@@ -15,6 +15,7 @@ import FabRegistration from "../public/projects/tsi-fabrication/03-registration.
 import FabUnitRegistration from "../public/projects/tsi-fabrication/04-unit-registration.png";
 import AepDashboard from "../public/projects/aep-system/01-dashboard.png";
 import ArmsAccounting from "../public/projects/arms/01-accounting-dashboard.png";
+import ArmsWsDashboard from "../public/projects/arms/03-ws-dashboard.png";
 import ArmsParameters from "../public/projects/arms/02-parameters.png";
 import Alphalab from "../public/projects/alphalab.png";
 import AtAccess from "../public/projects/ataccess-telemed-app.png";
@@ -35,7 +36,7 @@ export const PROJECTS = [
       { src: HrisLogin, caption: "Sign in" },
     ],
     details: "Layered backend (MVC + Services + DTO + Middleware) exposing a REST API to a JavaScript SPA, with role-based access control, CSRF protection, rate limiting, and Server-Sent Events for live-updating approval dashboards.",
-    stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "REST API", "SPA", "RBAC", "SSE", "Cron Job"],
+    stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "REST API", "SPA", "SSE", "Cron Job"],
   },
   {
     title: "PTO-CEI Online Certification",
@@ -88,7 +89,12 @@ export const PROJECTS = [
     subtitle: "Record management system for water sample testing, tracking each test from ongoing through completed and ready for release. Includes a Sales and Payments module for monitoring customer transactions, plus an accounting module converted from the lab's legacy desktop accounting software and customized to Alpha's own workflow.",
     demo_link: "",
     git_link: "",
-    photos: [{ src: Alphalab }, { src: ArmsAccounting, caption: "Accounting dashboard" }, { src: ArmsParameters, caption: "Test parameters setup" }],
+    photos: [
+      { src: Alphalab, caption: "Login" }, //
+      { src: ArmsAccounting, caption: "Accounting dashboard" },
+      { src: ArmsWsDashboard, caption: "Water sample monitoring dashboard" },
+      { src: ArmsParameters, caption: "Test parameters setup" },
+    ],
     details: "",
     stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL", "SammyJs"],
   },
