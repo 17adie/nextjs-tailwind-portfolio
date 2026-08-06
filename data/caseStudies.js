@@ -14,8 +14,6 @@ export const CASE_STUDIES = {
     slug: "hris",
     title: "HRIS — Human Resource Information System",
     tagline: "A government office of ~400 employees, moved off paper by two developers.",
-    // No Timeline row: the resume doesn't date this project, so add one once you've
-    // confirmed it rather than shipping an inferred range.
     meta: [
       { label: "Role", value: "Full-Stack Developer" },
       { label: "Team", value: "2 developers" },
@@ -32,8 +30,6 @@ export const CASE_STUDIES = {
       "MySQL for persistence. Bulk employee imports don't block on email: each new account's credentials are written to a database-backed email queue and delivered by a scheduled cron job running in the background.",
       "13+ modules on that one foundation: employee management, leave, overtime, CTO, approval workflows and employee self-service.",
     ],
-    // Splitting these out matters on a 2-person project: a reviewer who can't tell which
-    // half was yours has to assume the smaller half was.
     myScope: [
       "The application foundation every module is built on — the layered backend exposing the REST API, and the SPA base template.",
       "The employee self-service PDS profile end to end — personal data, education, work history, eligibilities and attachments.",
@@ -73,50 +69,55 @@ export const CASE_STUDIES = {
 
   "pto-cei": {
     slug: "pto-cei",
-    title: "PTO-CEI Online Certification",
+    title: "PTO/CEI Online Application",
     tagline: "A government certification workflow, from hand-prepared certificates to one click.",
     meta: [
       { label: "Role", value: "Full-Stack Developer" },
-      { label: "Timeline", value: "2023 – 2025" },
-      { label: "Org", value: "DOLE Regional Office IV-A" },
-      { label: "Users", value: "Applicants, evaluators, inspectors" },
+      { label: "Team", value: "2 developers" },
+      { label: "Timeline", value: "~6 months" },
+      { label: "Users", value: "Applicants, evaluators, PO inspectors, RO focal" },
     ],
     problem: [
       "Getting a PTO-CEI certificate meant filing on paper, then calling the office to find out what stage the application had reached. On the office side, evaluators and inspectors were assigned by hand, inspection authorities were typed up individually, and each approved certificate was hand-prepared.",
       "The whole chain — submission, assignment, inspection, compliance review, payment, approval, issuance — had to move online without losing the checks built into the paper version.",
     ],
     approach: [
-      "One system carrying an application through every stage: submission, evaluator and inspector assignment, system-generated inspection authorities, on-site inspection reporting, compliance review, order of payment generation, certificate approval and automated issuance.",
-      "A client-facing portal where applicants have their own accounts, submit requests, and watch status change in real time instead of phoning to ask.",
-      "Certificates generated as PDFs with TCPDF and emailed automatically the moment they're approved.",
-      "A QR code on every certificate resolving to a verification endpoint, so any third party can confirm a certificate is genuine.",
+      "Two applications on a shared backend — an office-facing admin app (evaluators, PO inspectors, RO focal) and a client-facing portal for applicant establishments — talking to the same MySQL database through one PHP controllers/model layer.",
+      "Vanilla PHP with PDO for data access, jQuery and Bootstrap on the frontend (SB Admin 2 as the base), rakit/validation for request rules, and Laminas Escaper for output escaping.",
+      "A staged workflow moving each application through submission → evaluator and PO-inspector assignment → system-generated inspection authorities (batch generation, separately for electrical and mechanical) → on-site inspection reporting → compliance review → order of payment → final approval → automated certificate issuance.",
+      "Certificates rendered as PDFs with TCPDF and delivered by PHPMailer the moment they're approved.",
+      "A QR code on every certificate resolving to a public verification endpoint. Each check records who verified — IP address, browser, device — leaving an audit trail without asking the verifier to sign in.",
     ],
     myScope: [
-      "Built the system, across both the office-facing workflow and the applicant-facing portal.",
-      "The staged workflow engine — assignment, inspection reporting, compliance review, order of payment and approval — with each stage gated by the one before it.",
-      "Automated certificate generation and email delivery on approval.",
-      "QR-based certificate verification.",
-      "Page-level access control by user role, separating what applicants, evaluators and inspectors can reach.",
+      "The applicant-facing client app end to end: registration, account recovery and password reset, the applicant portal for submitting and tracking applications, and receiving approved certificates.",
+      "The public QR-verification page — an unauthenticated route that resolves a certificate token, returns the record, and logs who checked (IP, browser, device) for the audit trail.",
+      "Shared the admin side with my co-developer, contributing to the office-facing workflow that supports evaluators, PO inspectors and RO focal.",
     ],
-    collaborated: [],
+    collaborated: [
+      "The admin side — the office-facing workflow covering evaluator and inspector assignment, batch authority generation, on-site inspection reporting, compliance review, order of payment and final certificate approval — was built together with my co-developer.",
+    ],
     decisions: [
       {
+        title: "Two apps sharing one API, not one combined interface",
+        body: "The office and the applicants have almost no overlap in what they need to do, and mixing them in one interface would have meant either two role-toggled variants of every screen or a heavy client-side branching layer. Two separate apps on a shared backend keeps each surface focused on its own audience — the office gets a full workbench, applicants get a small portal — while sharing one MySQL schema and one PHP model layer so a business rule doesn't have to be maintained twice.",
+      },
+      {
         title: "QR verification instead of a certificate registry lookup",
-        body: "A PDF certificate is trivial to alter, and the people who need to check one — employers, other agencies — have no reason to have an account on the system. Printing a QR code that resolves to a verification endpoint means anyone holding the document can confirm it against the issuing system in one scan, with no login and no phone call to the office.",
+        body: "A PDF certificate is trivial to alter, and the people who need to check one — employers, other agencies — have no reason to have an account on the system. Printing a QR code that resolves to a public verification endpoint means anyone holding the document can confirm it against the issuing system in one scan, with no login and no phone call to the office. Every check is logged with the verifier's IP, browser and device, so the office can see who's checking what without adding friction to the check itself.",
       },
       {
         title: "Applicant accounts rather than reference numbers",
         body: "Most of the office's inbound calls were status questions. Giving applicants their own accounts turned that into something they could answer themselves, and gave the system somewhere to deliver approved certificates that isn't an email attachment sent to whoever filed the request.",
       },
       {
-        title: "Generating inspection authorities from the system",
-        body: "Inspection authorities were typed by hand for each application, which is both slow and a source of transcription errors in exactly the details an inspection depends on. Generating them from the application record means the document can't disagree with the data it came from.",
+        title: "Batch-generating inspection authorities per discipline",
+        body: "Inspection authorities were typed by hand for each application — slow and a source of transcription errors in exactly the details an inspection depends on. Generating them from the application record means the document can't disagree with the data it came from, and batching them per discipline (electrical, mechanical) lets one inspector receive a merged authority covering several applications in one trip.",
       },
     ],
     results: [
       "Certificate issuance went from a manual, hand-prepared task to a single click.",
-      "Applicants submit and track their own applications in real time, and receive approved certificates by email automatically.",
-      "Anyone can verify a certificate's authenticity by scanning its QR code.",
+      "Applicants submit and track their own applications online, and receive approved certificates by email automatically on approval.",
+      "Anyone can verify a certificate's authenticity by scanning its QR code — no account needed.",
       "The full evaluation chain — assignment, inspection, compliance, payment, approval — runs in one system instead of across paper and follow-up calls.",
     ],
   },

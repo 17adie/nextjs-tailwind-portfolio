@@ -19,11 +19,14 @@ import PtoDashboard from "../public/projects/pto-cei/01-client-dashboard.png";
 import PtoLogin from "../public/projects/pto-cei/02-login.png";
 import PtoRegistration from "../public/projects/pto-cei/03-registration.png";
 import PtoRecovery from "../public/projects/pto-cei/04-account-recovery.png";
+import PtoCertVerify from "../public/projects/pto-cei/05-certificate-verification.png";
+import PtoCertEmailTemp from "../public/projects/pto-cei/06-certificate-email.png";
 import FabDashboard from "../public/projects/tsi-fabrication/01-dashboard.png";
 import FabLogin from "../public/projects/tsi-fabrication/02-login.png";
 import FabRegistration from "../public/projects/tsi-fabrication/03-registration.png";
 import FabUnitRegistration from "../public/projects/tsi-fabrication/04-unit-registration.png";
 import AepDashboard from "../public/projects/aep-system/01-dashboard.png";
+import AepLandingPage from "../public/projects/aep-system/02-landing-page.png";
 import ArmsAccounting from "../public/projects/arms/01-accounting-dashboard.png";
 import ArmsWsDashboard from "../public/projects/arms/03-ws-dashboard.png";
 import ArmsParameters from "../public/projects/arms/02-parameters.png";
@@ -38,8 +41,6 @@ export const PROJECTS = [
     slug: "hris",
     tier: "production",
     org: "DOLE Regional Office IV-A",
-    // No year: the resume doesn't date this one, and a date I'd have inferred is a date
-    // that could be wrong in front of an interviewer. Fill it in when you know it.
     year: "",
     impact: "~400 employees · 13+ modules · built by a team of 2",
     subtitle:
@@ -53,21 +54,18 @@ export const PROJECTS = [
       { src: HrisLogin, caption: "Sign in" },
     ],
     details:
-      // "Page-level access control by user role" deliberately, not "RBAC" — access is
-      // gated per page by role, not per action (add/edit/delete/view). Claiming the
-      // fuller model is the kind of thing that unravels in an interview.
       "Layered backend (MVC + Services + DTO + Middleware) exposing a REST API to a JavaScript SPA, with page-level access control by user role, CSRF protection, rate limiting, and Server-Sent Events for live-updating approval dashboards.",
     stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "RequireJS", "page.js", "REST API", "SPA", "SSE", "Cron Job"],
   },
   {
-    title: "PTO-CEI Online Certification",
+    title: "PTO/CEI Online Application",
     slug: "pto-cei",
     tier: "production",
     org: "DOLE Regional Office IV-A",
     year: "2023 – 2025",
     impact: "Certificate issuance: hand-prepared → one click",
     subtitle:
-      "Digitized an end-to-end government certification workflow: application submission, evaluator and inspector assignment, system-generated inspection authorities, on-site inspection reporting, compliance review, order of payment, and automated certificate issuance. Applicants get their own portal to submit, track status in real time, and receive approved certificates by email — each carrying a QR code anyone can scan to verify authenticity.",
+      "Digitized an end-to-end government certification workflow: application submission, evaluator and inspector assignment, system-generated inspection authorities (batch, per discipline), on-site inspection reporting, compliance review, order of payment and automated certificate issuance. Applicants get their own portal to submit, track status online, and receive approved certificates by email — each carrying a QR code anyone can scan to verify authenticity.",
     demo_link: "",
     git_link: "",
     photos: [
@@ -75,9 +73,11 @@ export const PROJECTS = [
       { src: PtoLogin, caption: "Client sign in" },
       { src: PtoRegistration, caption: "Account registration" },
       { src: PtoRecovery, caption: "Account recovery" },
+      { src: PtoCertVerify, caption: "Certificate Verification" },
+      { src: PtoCertEmailTemp, caption: "Certificate Email Template" },
     ],
     details: "",
-    stack: ["PHP", "MySQL", "PDO", "JavaScript", "Bootstrap", "TCPDF", "SPA"],
+    stack: ["PHP", "MySQL", "PDO", "jQuery", "Bootstrap", "TCPDF", "PHPMailer", "SPA"],
   },
   {
     title: "AEP Processing System",
@@ -89,7 +89,10 @@ export const PROJECTS = [
       "Full-stack system for Alien Employment Permit processing, replacing legacy JOT paper forms with automated validation, structured data handling, and reporting. I maintain it in production — resolving data issues, handling user concerns, and generating reports for management.",
     demo_link: "",
     git_link: "",
-    photos: [{ src: AepDashboard, caption: "Dashboard" }],
+    photos: [
+      { src: AepDashboard, caption: "Dashboard" },
+      { src: AepLandingPage, caption: "Landing page" }
+    ],
     details: "",
     stack: ["PHP", "MySQL", "PDO", "JavaScript", "Bootstrap", "TCPDF", "SPA"],
   },
@@ -137,8 +140,6 @@ export const PROJECTS = [
     org: "Advance Medical Access Philippines",
     year: "2020 – 2022",
     impact: "Android + iOS · WebRTC video consultations",
-    // Was a definition of what teleconsultation is. A reviewer already knows; what they
-    // don't know is which parts were mine.
     subtitle:
       "Built the ATaccess doctor and patient app for Android and iOS — registration, video consultations, scheduling, e-prescriptions, and admin tools. Implemented the secure real-time video layer with WebRTC so it ran reliably on both platforms inside a Cordova WebView, and wrote the MySQL stored procedures behind the platform's core data operations.",
     demo_link: "https://ataccess.ph/app/",
@@ -155,8 +156,6 @@ export const PROJECTS = [
     impact: "Admin portal, approval flow, email notifications",
     subtitle:
       "Built an e-approval system from the ground up for a freelance client — admin portal, document request and approval flow, email notifications, and reporting tools.",
-    // The old demo pointed at 000webhostapp.com, which has since been shut down. A dead
-    // demo link reads as an abandoned portfolio, so the card now links only to source.
     demo_link: "",
     git_link: "https://github.com/17adie/e-app",
     photos: [{ src: EApp, caption: "E-approval system" }],
@@ -167,7 +166,6 @@ export const PROJECTS = [
     title: "MERN Blog Platform",
     tier: "side",
     org: "Personal project",
-    // Undated in the resume — see the note on HRIS above
     year: "",
     impact: "Live deployment · JWT auth · full post CRUD",
     subtitle:
