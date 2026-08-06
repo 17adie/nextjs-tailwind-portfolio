@@ -1,21 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import SectionShell from "./SectionShell"
+import SectionHeading from "./SectionHeading"
 import { SECTIONS } from "../data/sections";
 import Image from "next/image";
 
 import { AiFillGithub, AiOutlineLink } from "react-icons/ai";
+import { MdArrowForward } from "react-icons/md";
 import { Fade } from "react-awesome-reveal";
 import Lightbox from "./Lightbox";
-import { PROJECTS } from "../data/projects";
-
-// Cycled per stack tag; wraps so a project can list more tags than there are colors
-const gradient_color = ["#FF007F", "#FF5C4C", "#FF8933", "#FFB719", "#FFE500", "#48A71D", "#AC2C7B"];
+import usePendingRoute from "../hooks/usePendingRoute";
+import { PRODUCTION_PROJECTS, SIDE_PROJECTS } from "../data/projects";
 
 function ProjectCard({ project }) {
   const [expanded, setExpanded] = useState(false);
   const [isTruncated, setIsTruncated] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const textRef = useRef(null);
+
+  const caseStudyHref = project.slug ? `/work/${project.slug}` : null;
+  const isOpening = usePendingRoute(caseStudyHref);
 
   const photos = project.photos;
   const cover = photos[0];
@@ -34,59 +38,102 @@ function ProjectCard({ project }) {
     return () => window.removeEventListener("resize", measure);
   }, [expanded]);
 
-  const have_git = (link) => (
-    <a href={link} target="_blank" rel="noopener noreferrer">
-      <AiFillGithub />
-    </a>
-  );
-
-  const have_demo = (link) => (
-    <a href={link} target="_blank" rel="noopener noreferrer">
-      <AiOutlineLink />
-    </a>
-  );
-
   return (
-    <div className="transition-all max-w-xs h-full rounded overflow-hidden bg-white dark:bg-gray-800 relative">
+    <div className="transition-all flex h-full flex-col rounded-xl overflow-hidden bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700/60">
       <button type="button" onClick={() => setLightboxIndex(0)} aria-label={`View ${project.title} screenshots`} className="group relative block w-full cursor-pointer overflow-hidden">
         {/* The zoom lives on this wrapper, not the <Image>, so the scrim is scaled by
             the same transform — on the image itself the gradient stayed put while the
             picture grew out from under it. */}
         <div className="relative transition duration-200 ease-in group-hover:scale-110">
-          <Image className="object-cover h-48 w-96 rounded p-3" src={cover.src} alt={project.title} />
-          {/* Inset by 3 to match the image's own p-3, so it covers the picture rather
-              than the card padding around it. Square corners on purpose: padding on an
-              <img> insets the picture but border-radius applies to the border box, so
-              the visible picture has sharp corners — a rounded scrim curved away from
-              them and let an undimmed white sliver show through. */}
-          <span className="pointer-events-none absolute inset-x-3 top-3 h-24 bg-gradient-to-b from-black/60 via-black/25 to-transparent" />
+          <Image className="object-cover h-44 w-full rounded-t" src={cover.src} alt={`${project.title} — ${cover.caption || "screenshot"}`} />
+          <span className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/60 via-black/25 to-transparent" />
         </div>
-        {photos.length > 1 && <span className="absolute bottom-4 right-4 rounded bg-black/60 px-2 py-0.5 text-xs font-medium text-white">1 / {photos.length}</span>}
+        {photos.length > 1 && <span className="absolute bottom-3 right-3 rounded bg-black/60 px-2 py-0.5 text-xs font-medium text-white">1 / {photos.length}</span>}
       </button>
-      <div className="px-3 py-4 mb-16">
-        <div className="flex items-baseline justify-between">
-          <div className="font-bold text-xl mb-2">{project.title} </div>
-          <div className="flex text-2xl text-teal-600">
-            <span>{project.git_link != "" ? have_git(project.git_link) : ""}</span>
-            <span className="ml-2">{project.demo_link != "" ? have_demo(project.demo_link) : ""}</span>
+
+      <div className="flex flex-1 flex-col px-4 py-4">
+        {/* Where and when, so a reviewer can tell paid production work from a weekend
+            build without reading the description */}
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="font-display text-lg font-bold text-gray-900 dark:text-gray-100">{project.title}</h3>
+          <div className="flex shrink-0 text-xl text-teal-600">
+            {project.git_link && (
+              <a href={project.git_link} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} source on GitHub`}>
+                <AiFillGithub />
+              </a>
+            )}
+            {project.demo_link && (
+              <a href={project.demo_link} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} live demo`} className="ml-2">
+                <AiOutlineLink />
+              </a>
+            )}
           </div>
         </div>
-        {/* min-h reserves 4 lines so every collapsed card is the same height */}
-        <p ref={textRef} className={`text-gray-700 text-sm dark:text-gray-500 min-h-[5rem] ${expanded ? "" : "clamp-4"}`}>
+
+        {/* Sits under the title now, in sentence case. It used to lead the card in
+            uppercase with wide tracking — which gave the loudest line on every card to
+            the least distinguishing fact, since five of the six production projects
+            share this one employer. Kept rather than dropped: the year carries recency
+            and the client is what separates paid government work from a side project.
+            Year is optional — a couple aren't dated on the resume, and rendering the
+            separator unconditionally left a trailing "·". */}
+        <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+          {project.org}
+          {project.year && ` · ${project.year}`}
+        </p>
+
+        {/* The one line that gets read if nothing else does */}
+        {project.impact && <p className="mt-2 text-xs font-semibold text-teal-700 dark:text-teal-400">{project.impact}</p>}
+
+        <p ref={textRef} className={`mt-2 text-sm text-gray-700 dark:text-gray-400 ${expanded ? "" : "clamp-4"}`}>
           {project.subtitle}
         </p>
         {(isTruncated || expanded) && (
-          <button type="button" onClick={() => setExpanded((prev) => !prev)} aria-expanded={expanded} className="mt-1 text-xs font-semibold text-teal-600 hover:text-teal-500 focus:outline-none">
+          <button type="button" onClick={() => setExpanded((prev) => !prev)} aria-expanded={expanded} className="mt-1 self-start text-xs font-semibold text-teal-600 hover:text-teal-500 focus:outline-none">
             {expanded ? "See less" : "See more"}
           </button>
         )}
-      </div>
-      <div className="px-3 py-1 pb-2 absolute bottom-0 left-0 right-0">
-        {project.stack.map((s, i) => (
-          <span key={i} className="text-xs inline-block text-white mr-2 mt-2  row-end-auto" style={{ color: gradient_color[i % gradient_color.length] }}>
-            #{s}
-          </span>
-        ))}
+
+        {/* mt-auto pins the tags and the case-study link to the bottom of the card
+            regardless of description length, so a row of cards lines up */}
+        <div className="mt-auto pt-4">
+          {/* Was a row of "#Tag" in seven rotating colours cycled by array position.
+              Three problems: the colour carried no meaning (PHP came out pink on one
+              card and orange on the next, implying a taxonomy that doesn't exist), six
+              of the seven failed WCAG AA on the light-theme card — the yellow sat at
+              1.28:1 on white, effectively invisible — and the "#" read as a clickable
+              social tag when nothing here is clickable. One quiet colour instead, in
+              the same chip the case-study page uses for its Stack list. */}
+          <div className="flex flex-wrap gap-1.5">
+            {project.stack.map((s) => (
+              <span
+                key={s}
+                className="rounded-md border border-teal-600/30 bg-teal-500/5 px-2 py-0.5 text-[11px] font-medium text-teal-700 dark:border-teal-400/30 dark:text-teal-300"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+
+          {project.slug && (
+            <Link
+              href={caseStudyHref}
+              aria-busy={isOpening}
+              // hover:gap-2 is dropped while pending so the label doesn't shift sideways
+              // under the cursor at the same moment the spinner appears
+              className={`mt-3 inline-flex items-center gap-1 text-xs font-bold text-teal-600 transition dark:text-teal-400 ${isOpening ? "" : "hover:gap-2 hover:text-teal-500"}`}
+            >
+              {isOpening ? "Opening" : "Read the case study"}
+              {isOpening ? (
+                // border-current keeps the ring on the link's own teal, and
+                // border-t-transparent is what makes the spin visible
+                <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-current border-t-transparent" />
+              ) : (
+                <MdArrowForward />
+              )}
+            </Link>
+          )}
+        </div>
       </div>
 
       {lightboxIndex !== null && <Lightbox photos={photos} title={project.title} index={lightboxIndex} onIndexChange={setLightboxIndex} onClose={() => setLightboxIndex(null)} />}
@@ -94,18 +141,35 @@ function ProjectCard({ project }) {
   );
 }
 
+function Grid({ projects }) {
+  return (
+    <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Fade cascade damping={0.08} triggerOnce className="h-full">
+        {projects.map((p) => (
+          <ProjectCard key={p.title} project={p} />
+        ))}
+      </Fade>
+    </div>
+  );
+}
+
 function ProjectSection() {
-
-  const ProjectCards = PROJECTS.map((v, i) => <ProjectCard key={i} project={v} />);
-
   return (
     <SectionShell tone="a" id={SECTIONS.works.id}>
-      <h2 className="text-2xl font-bold mb-6 text-center">My Works</h2>
-      <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
-      <div className="max-w-5xl mx-auto">
-        <div className="mt-5 flex flex-wrap gap-7 justify-center">
-          <Fade>{ProjectCards}</Fade>
-        </div>
+      <SectionHeading
+        eyebrow="Works"
+        title="Systems people actually use"
+        subtitle="Most of these run inside government offices and can't be linked publicly, so each card opens its own screenshots."
+      />
+
+      <div className="mx-auto mt-10 max-w-6xl">
+        {/* Two tiers rather than one flat grid. Mixing a 13-module HRIS in with a
+            weekend build invited a reviewer to average them. */}
+        <h3 className="text-xs font-bold uppercase tracking-widest text-teal-600 dark:text-teal-400">Production systems</h3>
+        <Grid projects={PRODUCTION_PROJECTS} />
+
+        <h3 className="mt-14 text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-500">Side projects</h3>
+        <Grid projects={SIDE_PROJECTS} />
       </div>
     </SectionShell>
   );

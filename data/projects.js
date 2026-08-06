@@ -1,6 +1,16 @@
 // Project cards. photos[0] is the card cover; the rest fill the lightbox carousel.
 // To add a shot: drop it in the matching public/projects/<name>/ folder, import it
 // here, and append it to that project's photos array.
+//
+// `tier` splits the section in two. Everything used to render in one flat grid, which
+// averaged a 13-module system a government office runs on against a weekend CRUD app —
+// and a reviewer skimming a grid judges the weakest tile, not the strongest.
+//
+// `impact` is the one line a reviewer reads if they read nothing else, so it carries a
+// number or a before/after rather than a description of the feature set.
+//
+// `slug` links to a case study page (see data/caseStudies.js). Only the projects with
+// enough substance to fill one have it; the rest stop at the card.
 import HrisDashboard from "../public/projects/hris/01-dashboard.png";
 import HrisProfile from "../public/projects/hris/02-employee-profile.png";
 import HrisCalendar from "../public/projects/hris/03-hr-calendar.png";
@@ -20,13 +30,20 @@ import ArmsParameters from "../public/projects/arms/02-parameters.png";
 import Alphalab from "../public/projects/alphalab.png";
 import AtAccess from "../public/projects/ataccess-telemed-app.png";
 import EApp from "../public/projects/eapp.png";
-import NextCrud from "../public/projects/next-crud-mysql.png";
 import BlogPost from "../public/projects/blog-project.png";
 
 export const PROJECTS = [
   {
     title: "HRIS",
-    subtitle: "Human Resource Information System built from scratch with a 2-developer team for a government regional office of ~400 employees. Covers employee records, leave, overtime and CTO filing, multi-level approval routing, and employee self-service across 13+ modules.",
+    slug: "hris",
+    tier: "production",
+    org: "DOLE Regional Office IV-A",
+    // No year: the resume doesn't date this one, and a date I'd have inferred is a date
+    // that could be wrong in front of an interviewer. Fill it in when you know it.
+    year: "",
+    impact: "~400 employees · 13+ modules · built by a team of 2",
+    subtitle:
+      "Human Resource Information System built from scratch with a 2-developer team for a government regional office of ~400 employees. Covers employee records, leave, overtime and CTO filing, multi-level approval routing, and employee self-service across 13+ modules.",
     demo_link: "",
     git_link: "",
     photos: [
@@ -35,12 +52,22 @@ export const PROJECTS = [
       { src: HrisCalendar, caption: "HR calendar" },
       { src: HrisLogin, caption: "Sign in" },
     ],
-    details: "Layered backend (MVC + Services + DTO + Middleware) exposing a REST API to a JavaScript SPA, with role-based access control, CSRF protection, rate limiting, and Server-Sent Events for live-updating approval dashboards.",
+    details:
+      // "Page-level access control by user role" deliberately, not "RBAC" — access is
+      // gated per page by role, not per action (add/edit/delete/view). Claiming the
+      // fuller model is the kind of thing that unravels in an interview.
+      "Layered backend (MVC + Services + DTO + Middleware) exposing a REST API to a JavaScript SPA, with page-level access control by user role, CSRF protection, rate limiting, and Server-Sent Events for live-updating approval dashboards.",
     stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "REST API", "SPA", "SSE", "Cron Job"],
   },
   {
     title: "PTO-CEI Online Certification",
-    subtitle: "Digitized the end-to-end certification workflow, replacing a largely manual process with a centralized system that manages application submission, evaluator and inspector assignment, system-generated inspection authorities, on-site inspection reporting, compliance review, order of payment generation, certificate approval, and automated certificate issuance. Built a client portal where applicants can submit requests, monitor real-time application status, and receive approved certificates via email. Implemented QR code verification for certificate authenticity, enabling anyone to validate the legitimacy of issued certificates instantly.",
+    slug: "pto-cei",
+    tier: "production",
+    org: "DOLE Regional Office IV-A",
+    year: "2023 – 2025",
+    impact: "Certificate issuance: hand-prepared → one click",
+    subtitle:
+      "Digitized an end-to-end government certification workflow: application submission, evaluator and inspector assignment, system-generated inspection authorities, on-site inspection reporting, compliance review, order of payment, and automated certificate issuance. Applicants get their own portal to submit, track status in real time, and receive approved certificates by email — each carrying a QR code anyone can scan to verify authenticity.",
     demo_link: "",
     git_link: "",
     photos: [
@@ -54,7 +81,12 @@ export const PROJECTS = [
   },
   {
     title: "AEP Processing System",
-    subtitle: "Full-stack system for Alien Employment Permit processing, replacing legacy paper forms with automated validation, structured data handling, and reporting. Maintained in production.",
+    tier: "production",
+    org: "DOLE Regional Office IV-A",
+    year: "2026",
+    impact: "Replaced legacy paper forms · maintained in production",
+    subtitle:
+      "Full-stack system for Alien Employment Permit processing, replacing legacy JOT paper forms with automated validation, structured data handling, and reporting. I maintain it in production — resolving data issues, handling user concerns, and generating reports for management.",
     demo_link: "",
     git_link: "",
     photos: [{ src: AepDashboard, caption: "Dashboard" }],
@@ -63,7 +95,12 @@ export const PROJECTS = [
   },
   {
     title: "TSI Fabrication Online System",
-    subtitle: "Built from scratch to replace a fully manual process, with an online application and digital evaluation workflow and certificates auto-generated and emailed on approval.",
+    tier: "production",
+    org: "DOLE Regional Office IV-A",
+    year: "2025",
+    impact: "Fully manual process → online, certificates auto-issued",
+    subtitle:
+      "Built from scratch to replace a fully manual process: online application, a digital evaluation workflow for evaluators, and certificates auto-generated and emailed the moment an application is approved.",
     demo_link: "",
     git_link: "",
     photos: [
@@ -76,17 +113,13 @@ export const PROJECTS = [
     stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "SPA", "Bootstrap", "TCPDF"],
   },
   {
-    title: "Blog Post",
-    subtitle: "My first VITE + MERN (MongoDB, ExpressJs, ReactJs, NodeJs) project: a blog with user accounts, where you can easily add, update, and delete posts.",
-    demo_link: "https://mern-blog-client-ljra.onrender.com",
-    git_link: "https://github.com/17adie/mern-blog-project",
-    photos: [{ src: BlogPost }],
-    details: "",
-    stack: ["MongoDB", "ExpressJs", "ReactJs", "NodeJs", "Vite", "Tailwind CSS", "jwt"],
-  },
-  {
     title: "ARMS",
-    subtitle: "Record management system for water sample testing, tracking each test from ongoing through completed and ready for release. Includes a Sales and Payments module for monitoring customer transactions, plus an accounting module converted from the lab's legacy desktop accounting software and customized to Alpha's own workflow.",
+    tier: "production",
+    org: "Alpha Laboratory Calamba",
+    year: "2015 – 2023",
+    impact: "Replaced lab paperwork · iterated over 5+ years in use",
+    subtitle:
+      "Record management system for water sample testing, tracking each test from ongoing through completed and ready for release. I later added a Sales and Payments module for transaction tracking and a real-time sales dashboard, plus an accounting module converted from the lab's legacy desktop software and customized to Alpha's own workflow.",
     demo_link: "",
     git_link: "",
     photos: [
@@ -99,30 +132,53 @@ export const PROJECTS = [
     stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL", "SammyJs"],
   },
   {
-    title: "ATAccess",
-    subtitle: "A teleconsultation app enables remote consultations with healthcare professionals for diagnosis and treatment of medical conditions, reducing the need for in-person visits.",
+    title: "ATaccess Teleconsultation",
+    tier: "production",
+    org: "Advance Medical Access Philippines",
+    year: "2020 – 2022",
+    impact: "Android + iOS · WebRTC video consultations",
+    // Was a definition of what teleconsultation is. A reviewer already knows; what they
+    // don't know is which parts were mine.
+    subtitle:
+      "Built the ATaccess doctor and patient app for Android and iOS — registration, video consultations, scheduling, e-prescriptions, and admin tools. Implemented the secure real-time video layer with WebRTC so it ran reliably on both platforms inside a Cordova WebView, and wrote the MySQL stored procedures behind the platform's core data operations.",
     demo_link: "https://ataccess.ph/app/",
     git_link: "",
-    photos: [{ src: AtAccess }],
+    photos: [{ src: AtAccess, caption: "Teleconsultation app" }],
     details: "",
-    stack: ["PHP", "HTML", "CSS", "JavaScript", "Framework7", "MySQL", "Cordova"],
+    stack: ["PHP", "HTML", "CSS", "JavaScript", "Framework7", "MySQL", "Cordova", "WebRTC"],
   },
   {
     title: "E-APP",
-    subtitle: "An e-approval system streamlines approval processes by allowing electronic requests, reviews, and approvals of documents or forms, increasing organizational efficiency.",
-    demo_link: "https://e-approval.000webhostapp.com/",
+    tier: "side",
+    org: "Freelance",
+    year: "2022 – 2023",
+    impact: "Admin portal, approval flow, email notifications",
+    subtitle:
+      "Built an e-approval system from the ground up for a freelance client — admin portal, document request and approval flow, email notifications, and reporting tools.",
+    // The old demo pointed at 000webhostapp.com, which has since been shut down. A dead
+    // demo link reads as an abandoned portfolio, so the card now links only to source.
+    demo_link: "",
     git_link: "https://github.com/17adie/e-app",
-    photos: [{ src: EApp }],
+    photos: [{ src: EApp, caption: "E-approval system" }],
     details: "",
     stack: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL"],
   },
   {
-    title: "NextJs CRUD App",
-    subtitle: "A simple web application that allows users to perform CRUD operations on data stored in a MySQL database. It provides four basic functionalities: Create, Read, Update, and Delete.",
-    demo_link: "",
-    git_link: "https://github.com/17adie/next-simple-crud-mysql",
-    photos: [{ src: NextCrud }],
+    title: "MERN Blog Platform",
+    tier: "side",
+    org: "Personal project",
+    // Undated in the resume — see the note on HRIS above
+    year: "",
+    impact: "Live deployment · JWT auth · full post CRUD",
+    subtitle:
+      "Full-stack blogging platform with user accounts and full create, read, update and delete post management on a React + Vite frontend, backed by a RESTful Node/Express API and MongoDB, deployed to a live cloud environment.",
+    demo_link: "https://mern-blog-client-ljra.onrender.com",
+    git_link: "https://github.com/17adie/mern-blog-project",
+    photos: [{ src: BlogPost, caption: "Blog platform" }],
     details: "",
-    stack: ["NextJs", "ReactJs", "Tailwind", "MySQL"],
+    stack: ["MongoDB", "ExpressJs", "ReactJs", "NodeJs", "Vite", "Tailwind CSS", "jwt"],
   },
 ];
+
+export const PRODUCTION_PROJECTS = PROJECTS.filter((p) => p.tier === "production");
+export const SIDE_PROJECTS = PROJECTS.filter((p) => p.tier === "side");
