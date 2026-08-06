@@ -27,20 +27,21 @@ export const CASE_STUDIES = {
       "The office needed one system covering the whole employee lifecycle, with the approval chain encoded in software rather than in whoever happened to be at their desk. Two of us built it from scratch.",
     ],
     approach: [
-      "A layered PHP backend on Slim 4 — MVC plus a Services layer, DTOs and Middleware — exposing a REST API.",
-      "A JavaScript single-page application consuming that API, built on a shared base template so every module started from the same foundation.",
-      "MySQL for persistence, with stored procedures and scheduled cron jobs behind the reporting and housekeeping work.",
+      "A layered PHP backend on Slim 4 — MVC, a Services layer and Middleware, plus a DTO for validated import rows — exposing a REST API.",
+      "A vanilla-JavaScript single-page application — RequireJS for AMD module loading and page.js for client-side routing — consuming that API on a shared base template so every module started from the same foundation.",
+      "MySQL for persistence. Bulk employee imports don't block on email: each new account's credentials are written to a database-backed email queue and delivered by a scheduled cron job running in the background.",
       "13+ modules on that one foundation: employee management, leave, overtime, CTO, approval workflows and employee self-service.",
     ],
     // Splitting these out matters on a 2-person project: a reviewer who can't tell which
     // half was yours has to assume the smaller half was.
     myScope: [
       "The application foundation every module is built on — the layered backend exposing the REST API, and the SPA base template.",
-      "The employee self-service side end to end: PDS profile management (personal data, education, work history, eligibilities, attachments) plus leave, overtime and CTO filing with status tracking.",
+      "The employee self-service PDS profile end to end — personal data, education, work history, eligibilities and attachments.",
       "The security layer: page-level access control by user role, CSRF protection, rate limiting, secure session management and security headers.",
-      "Automated document generation — PDF forms, Excel and Word exports — and bulk employee import with validation.",
+      "Automated document generation — PDF forms, Excel and Word exports — and bulk employee import with validation, where each new account's credentials are queued in a database-backed email queue and sent by a background cron job so the import never waits on the mail server.",
     ],
     collaborated: [
+      "The leave, overtime and CTO filing workflows with status tracking.",
       "The multi-level approval and delegation workflow, which routes each application to the correct approver automatically and reassigns when someone delegates.",
       "The real-time layer: in-app notifications, one-on-one HR chat, and live-updating approval dashboards.",
     ],

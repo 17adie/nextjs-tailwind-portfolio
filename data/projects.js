@@ -57,7 +57,7 @@ export const PROJECTS = [
       // gated per page by role, not per action (add/edit/delete/view). Claiming the
       // fuller model is the kind of thing that unravels in an interview.
       "Layered backend (MVC + Services + DTO + Middleware) exposing a REST API to a JavaScript SPA, with page-level access control by user role, CSRF protection, rate limiting, and Server-Sent Events for live-updating approval dashboards.",
-    stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "REST API", "SPA", "SSE", "Cron Job"],
+    stack: ["PHP", "Slim 4", "PDO", "MySQL", "JavaScript", "RequireJS", "page.js", "REST API", "SPA", "SSE", "Cron Job"],
   },
   {
     title: "PTO-CEI Online Certification",
