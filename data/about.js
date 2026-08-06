@@ -5,7 +5,7 @@
 export const ABOUT = [
   "I started at a testing laboratory doing data entry and scanning documents. The paperwork was the bottleneck, so I taught myself to code and built the system that replaced it — and I've been building versions of that ever since.",
   "Five years on, that's still the work I like most: taking a process that runs on paper, forms and follow-up calls, and turning it into something people use every day. Most of it has been for government offices, where the constraints are real — sensitive personal data, multi-level approvals, and users who can't afford downtime.",
-  "Day to day I work in PHP, JavaScript and MySQL, and I'm expanding into Laravel, Vue and Inertia. I use ChatGPT, Claude and Copilot as part of how I work. Comfortable working remotely and joining projects already in progress.",
+  "Day to day I work in PHP, JavaScript and MySQL, and I'm expanding into Laravel, Vue and Inertia. I use ChatGPT, Codex, Claude and Copilot as part of how I work. Comfortable working remotely and joining projects already in progress.",
 ];
 
 // Four numbers a reviewer can read in three seconds. Every one is a fact from the

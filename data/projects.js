@@ -141,7 +141,7 @@ export const PROJECTS = [
     year: "2020 – 2022",
     impact: "Android + iOS · WebRTC video consultations",
     subtitle:
-      "Built the ATaccess doctor and patient app for Android and iOS — registration, video consultations, scheduling, e-prescriptions, and admin tools. Implemented the secure real-time video layer with WebRTC so it ran reliably on both platforms inside a Cordova WebView, and wrote the MySQL stored procedures behind the platform's core data operations.",
+      "Co-developed the ATaccess doctor and patient app for Android and iOS on a 3-developer team — registration, video consultations, scheduling, e-prescriptions, and admin tools. My part focused on the secure real-time video layer with WebRTC running reliably on both platforms inside a Cordova WebView, plus the MySQL stored procedures behind the platform's core data operations.",
     demo_link: "https://ataccess.ph/app/",
     git_link: "",
     photos: [{ src: AtAccess, caption: "Teleconsultation app" }],

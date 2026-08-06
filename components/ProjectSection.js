@@ -116,20 +116,28 @@ function ProjectCard({ project }) {
           </div>
 
           {project.slug && (
+            // Filled primary button, full-width, deliberately sitting at the bottom of
+            // the card. The previous treatment — a small teal text link with an arrow —
+            // read as more metadata: it lived directly under a row of teal chips, so
+            // the eye grouped them all as "tags." A filled CTA in the strongest colour
+            // on the card, at the widest possible size, is the pattern reviewers scan
+            // for when they're deciding whether to go deeper. `aria-busy` narrates the
+            // pending state for screen readers.
             <Link
               href={caseStudyHref}
               aria-busy={isOpening}
-              // hover:gap-2 is dropped while pending so the label doesn't shift sideways
-              // under the cursor at the same moment the spinner appears
-              className={`mt-3 inline-flex items-center gap-1 text-xs font-bold text-teal-600 transition dark:text-teal-400 ${isOpening ? "" : "hover:gap-2 hover:text-teal-500"}`}
+              // `group` lets the arrow shift right on hover — the button itself is the
+              // hover source, so its own :hover state can drive a child's transform.
+              // py-3 (not py-2.5) so the target hits the 44px minimum a fingertip needs
+              className="group mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-500 px-3 py-3 text-sm font-semibold text-white transition hover:bg-teal-600"
             >
               {isOpening ? "Opening" : "Read the case study"}
               {isOpening ? (
-                // border-current keeps the ring on the link's own teal, and
+                // border-current keeps the ring on the button's own text colour, and
                 // border-t-transparent is what makes the spin visible
-                <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-current border-t-transparent" />
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
               ) : (
-                <MdArrowForward />
+                <MdArrowForward className="text-base transition group-hover:translate-x-0.5" />
               )}
             </Link>
           )}
