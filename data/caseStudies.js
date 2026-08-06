@@ -121,6 +121,64 @@ export const CASE_STUDIES = {
       "The full evaluation chain — assignment, inspection, compliance, payment, approval — runs in one system instead of across paper and follow-up calls.",
     ],
   },
+
+  "aep-ee": {
+    slug: "aep-ee",
+    title: "AEP Processing System",
+    tagline: "Three permit workflows — AEP, Exclusion, Exemption — off Excel and JotForm onto one system.",
+    meta: [
+      { label: "Role", value: "Full-Stack Developer" },
+      { label: "Team", value: "2 developers" },
+      { label: "Users", value: "Applicants, evaluators, RO admin" },
+      { label: "Status", value: "Maintained in production" },
+    ],
+    problem: [
+      "The three permit tracks were each broken in a different way. Exclusion and Exemption were being kept in Excel — evaluators had to open a spreadsheet to check where an applicant stood, the same applicant could be entered twice without anyone noticing, and following a single case as it moved between evaluators was slow.",
+      "AEP was on JotForm. Applications came in as JotForm submissions, and the admin had to retype every field into the internal system before an evaluator could act on it. Retyping was slow, error-prone, and it pushed the whole evaluation queue back — the fields the client had already filled in were entered a second time by hand.",
+      "The fix had to do three things at once: replace Excel with a real database so duplicates could be prevented and cases could be tracked; replace JotForm with a client portal that writes straight into that database, so the internal application record is generated from what the client submitted rather than retyped by an admin; and share one office-facing admin across all three tracks so an evaluator has one queue, not three tools.",
+    ],
+    approach: [
+      "Two applications on a shared PHP backend — an office-facing admin app for the evaluation-to-issuance workflow, and a client-facing portal with three distinct front pages (AEP, Exclusion, Exemption) plus reference-number tracking.",
+      "Vanilla PHP with PDO for data access, jQuery and Bootstrap 4 on the frontend (SB Admin 2 as the admin base), SweetAlert2 for feedback, and rakit/validation for request rules.",
+      "One staged workflow driving all three permit types: submission → pre-evaluation → evaluator assignment → evaluation sheet → final evaluation → order of payment → card releasing (Exclusion/Exemption) or schedule sending (AEP).",
+      "Admin-side lifecycle actions on issued permits: modify validity, revoke, cancel or delete an application — with system_settings covering the office-wide knobs behind the workflow.",
+      "PDF generation with TCPDF and Word exports with PHPWord for evaluation sheets and issued documents; approval and notification emails delivered by PHPMailer.",
+    ],
+    // Same pattern as PTO/CEI (mostly-client + shared admin, with the same co-developer)
+    // is the reasonable default here, but I don't have the author's explicit split for
+    // this project. Kept broad on purpose — refine with a per-module split later.
+    myScope: [
+      "Contributed across both the office-facing admin and the applicant-facing client on a 2-developer team.",
+      // TODO(author): confirm which specific parts you built end-to-end (likely the three
+      // client front pages, reference-number tracking, and the AEP-specific admin bits —
+      // aep_send_schedule etc. — with the rest shared).
+    ],
+    collaborated: [
+      "The shared admin workflow — pre-evaluation, evaluator assignment, evaluation sheets, final evaluation, payment, card releasing and lifecycle actions — was built together with my co-developer.",
+    ],
+    decisions: [
+      {
+        title: "Three permit types on one admin, not three separate systems",
+        body: "AEP, Exclusion and Exemption differ mainly in the application form and a few downstream steps (AEP ends in schedule-sending; Exclusion and Exemption end in physical card releasing). Every stage in the middle — pre-evaluation, evaluator assignment, evaluation sheet, final decision, payment — is identical. Building them as one admin app with type-aware branching at the endpoints, rather than three duplicated codebases, means an office worker sees one queue and one workbench, and a change to the evaluation form happens in one place.",
+      },
+      {
+        title: "Three client entry points sharing the same account layer",
+        body: "Applicants filing an Exclusion or an Exemption aren't quite the same population as AEP applicants, but they overlap heavily. Each permit type gets its own front page (aep.html, exclusion.html, exemption.html) matching how the office refers to them, with a shared applicant-account layer underneath so one login covers all three and the office sees one applicant record, not three.",
+      },
+      {
+        title: "Reference-number tracking as a public shortcut",
+        body: "Not every applicant needs an account — some just want to check where their filed application currently sits. A public reference-number lookup (search_ref_no) covers that in one page, without asking the applicant to sign up first, and cuts the load on the front-desk phones without expanding the account surface.",
+      },
+    ],
+    results: [
+      "Three permit tracks — AEP, Exclusion, Exemption — running on one system instead of Excel spreadsheets (Exclusion, Exemption) and a JotForm-plus-retyping loop (AEP).",
+      "AEP applications no longer get retyped: the internal application record is generated from the client's submission, so the field the client filled in is the field the evaluator sees.",
+      "Duplicates in Exclusion and Exemption are prevented at the database, and each case is trackable across evaluators instead of hunting through a spreadsheet.",
+      "One evaluator queue and one payment flow for all three permit types.",
+      "Applicants apply through their permit type's page and track their application by reference number.",
+      "Issued permits and cards are generated and delivered by the system, with admin-side controls to modify validity, revoke or cancel after issuance.",
+    ],
+  },
 };
 
 // Photos and stack tags stay in projects.js so the card and the case study can't drift

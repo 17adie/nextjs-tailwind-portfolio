@@ -81,20 +81,21 @@ export const PROJECTS = [
   },
   {
     title: "AEP Processing System",
+    slug: "aep-ee",
     tier: "production",
     org: "DOLE Regional Office IV-A",
-    year: "2026",
-    impact: "Replaced legacy paper forms · maintained in production",
+    year: "2024 – 2026",
+    impact: "3 permit workflows (AEP · Exclusion · Exemption) on one system",
     subtitle:
-      "Full-stack system for Alien Employment Permit processing, replacing legacy JOT paper forms with automated validation, structured data handling, and reporting. I maintain it in production — resolving data issues, handling user concerns, and generating reports for management.",
+      "Full-stack system covering three separate permit workflows — Alien Employment Permit (AEP) and its Exclusion and Exemption tracks — sharing one office-facing admin. The admin handles pre-evaluation, evaluator assignment, evaluation sheets, final evaluation, order of payment, card releasing (Exclusion/Exemption) or schedule sending (AEP), plus lifecycle actions (modify validity, revoke, cancel). Applicants apply through the permit type's own front page and track their reference number.",
     demo_link: "",
     git_link: "",
     photos: [
-      { src: AepDashboard, caption: "Dashboard" },
-      { src: AepLandingPage, caption: "Landing page" }
+      { src: AepDashboard, caption: "Admin dashboard" },
+      { src: AepLandingPage, caption: "Client landing page" }
     ],
     details: "",
-    stack: ["PHP", "MySQL", "PDO", "JavaScript", "Bootstrap", "TCPDF", "SPA"],
+    stack: ["PHP", "MySQL", "PDO", "jQuery", "Bootstrap", "TCPDF", "PHPMailer", "PHPWord"],
   },
   {
     title: "TSI Fabrication Online System",
