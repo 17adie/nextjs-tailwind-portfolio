@@ -93,7 +93,7 @@ export default function CaseStudy({ study }) {
             <h1 className="font-display text-3xl font-bold tracking-tight text-gray-900 md:text-4xl dark:text-gray-100">{study.title}</h1>
             <p className="mt-3 text-base leading-7 text-gray-600 md:text-lg dark:text-gray-400">{study.tagline}</p>
 
-            <dl className="mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-gray-200 bg-white p-5 sm:grid-cols-4 dark:border-gray-700/60 dark:bg-gray-800/40">
+            <dl className={`mt-8 grid grid-cols-2 gap-4 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-700/60 dark:bg-gray-800/40 ${study.meta.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4"}`}>
               {study.meta.map((m) => (
                 <div key={m.label}>
                   <dt className="text-[11px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-500">{m.label}</dt>
@@ -185,6 +185,13 @@ export default function CaseStudy({ study }) {
               <MdOutlineMail className="text-lg" />
               {SITE.email}
             </a>
+          </div>
+
+          <div className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700/60">
+            <Link href="/#works" className="inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition hover:text-teal-600 dark:text-gray-400 dark:hover:text-teal-400">
+              <MdArrowBack />
+              Back to all work
+            </Link>
           </div>
         </div>
 
