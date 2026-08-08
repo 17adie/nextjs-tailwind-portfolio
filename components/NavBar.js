@@ -6,6 +6,7 @@ import { useTheme } from "next-themes"
 import { AttentionSeeker } from "react-awesome-reveal"
 import ScrollToTop from "../components/ScrollToTop"
 import { NAV_LINKS } from "../data/sections"
+import { SITE } from "../data/site"
 
 
 function NavBar() {
@@ -59,28 +60,24 @@ function NavBar() {
   const renderThemeChanger = () => {
     if (!mounted) return null
     const currentTheme = theme === "system" ? systemTheme : theme
+    const isDark = currentTheme === "dark"
 
-    if (currentTheme === "dark") {
-      return (
-        <AttentionSeeker effect="heartBeat">
-          <BsFillSunFill
-            className="cursor-pointer text-2xl text-white"
-            role="button"
-            onClick={() => setTheme("light")}
-          />
-        </AttentionSeeker>
-      )
-    } else {
-      return (
-        <AttentionSeeker effect="jello">
-          <BsFillMoonStarsFill
-            className="cursor-pointer text-2xl"
-            role="button"
-            onClick={() => setTheme("dark")}
-          />
-        </AttentionSeeker>
-      )
-    }
+    // The icon used to carry role="button" and the onClick itself. An <svg> is not a
+    // focusable element and role alone doesn't make it one, so the only way to change
+    // the theme was with a mouse — no Tab, no Enter, no screen-reader activation. It
+    // also had no accessible name. A real <button> gets all of that for free.
+    return (
+      <AttentionSeeker effect={isDark ? "heartBeat" : "jello"}>
+        <button
+          type="button"
+          onClick={() => setTheme(isDark ? "light" : "dark")}
+          aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+          className="flex cursor-pointer items-center text-2xl text-gray-700 dark:text-white"
+        >
+          {isDark ? <BsFillSunFill /> : <BsFillMoonStarsFill />}
+        </button>
+      </AttentionSeeker>
+    )
   }
 
   return (
@@ -99,21 +96,23 @@ function NavBar() {
           af
         </button>
 
-        {/* Full links appear at lg, not md: five icon+label pairs plus the logo and
-            toggle do not fit inside the md padding without wrapping. */}
-        <ul className="hidden lg:flex items-center gap-7">
-          {NAV_LINKS.map(({ id, label, Icon }) => {
+        {/* Full links appear at lg, not md: six labels plus the logo, toggle and résumé
+            button do not fit inside the md padding without wrapping. The icons that used
+            to sit beside each label are gone from this row — adding About and Experience
+            took it to six items, and at that width the icons were what pushed it over.
+            They're still in the mobile panel, where there's a column of room for them. */}
+        <ul className="hidden lg:flex items-center gap-6">
+          {NAV_LINKS.map(({ id, label }) => {
             const isActive = activeId === id
             return (
               <li key={id}>
                 <a
                   href={`#${id}`}
                   aria-current={isActive ? "true" : undefined}
-                  className={`flex items-center gap-1.5 text-sm font-medium transition ${
+                  className={`text-sm font-medium transition ${
                     isActive ? "text-teal-600 dark:text-teal-400" : "text-gray-600 hover:text-teal-600 dark:text-gray-300 dark:hover:text-teal-400"
                   }`}
                 >
-                  <Icon className="text-base" />
                   {label}
                 </a>
               </li>
@@ -122,6 +121,17 @@ function NavBar() {
         </ul>
 
         <div className="flex items-center gap-5">
+          {/* A call to action that stays on screen for the whole scroll, rather than only
+              at the top and bottom of the page */}
+          <a
+            href={SITE.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden rounded-lg border border-teal-600/40 px-3 py-1.5 text-xs font-semibold text-teal-700 transition hover:bg-teal-500 hover:text-white lg:inline-block dark:border-teal-400/40 dark:text-teal-300 dark:hover:bg-teal-500 dark:hover:text-white"
+          >
+            Résumé
+          </a>
+
           {renderThemeChanger()}
 
           <button

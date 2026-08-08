@@ -4,8 +4,10 @@
 
 :root {
   /* Height of the sticky navbar (py-3 + its tallest child). The hero subtracts this
-     so its first screen ends exactly at the fold instead of overflowing by the nav. */
-  --nav-h: 3.25rem;
+     so its first screen ends exactly at the fold instead of overflowing by the nav.
+     54px, measured: the tallest child is now the Résumé button (text-xs + py-1.5),
+     which is 2px taller than the theme toggle this was originally set against. */
+  --nav-h: 3.375rem;
 }
 
 /* Anchor links glide instead of jumping — but never for visitors who have asked
@@ -13,6 +15,26 @@
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
+  }
+}
+
+/* Drives the top navigation bar. A CSS animation rather than a width transition on a
+   state change: a transition needs the browser to paint 0% before it will animate away
+   from it, which means a requestAnimationFrame dance that React can batch away — and
+   rAF doesn't fire at all in a backgrounded tab, leaving the bar stuck empty. An
+   animation just runs when the element mounts.
+
+   Ends at 90%, not 100%: the real duration is unknown, so it decelerates toward the end
+   and only completes once the route actually resolves. */
+@keyframes route-progress {
+  0% {
+    width: 0%;
+  }
+  35% {
+    width: 55%;
+  }
+  100% {
+    width: 90%;
   }
 }
 

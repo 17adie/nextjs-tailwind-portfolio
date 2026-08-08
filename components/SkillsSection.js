@@ -2,12 +2,10 @@ import React from "react"
 import Image from "next/image"
 import { Fade } from "react-awesome-reveal"
 import { BsCodeSlash } from "react-icons/bs"
-import { CORE, ALSOUSE, LEARNING, CONCEPTS, TOOLS, AITOOLS } from "../data/skills"
+import { BACKEND, FRONTEND, LEARNING, CONCEPTS, TOOLS } from "../data/skills"
 import SectionShell from "./SectionShell"
+import SectionHeading from "./SectionHeading"
 import { SECTIONS } from "../data/sections";
-
-// Vector marks for the stack entries that have no PNG in public/image.
-// react-icons is already a dependency, so this adds no new package.
 
 function Tile({ item, compact }) {
   // Entries with no brand mark anywhere (Slim, Inertia) fall back to a code glyph so
@@ -77,34 +75,32 @@ function Pills({ items, tone = "teal" }) {
 
 function SkillsSection() {
   return (
-    <SectionShell tone="b" id={SECTIONS.techStack.id}>
+    <SectionShell tone="a" id={SECTIONS.techStack.id}>
       <Fade>
-        <h2 className="text-2xl font-bold mb-6 text-center">Tech Stack</h2>
-        <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
+        <SectionHeading eyebrow="Tech stack" title="What I build with" />
 
+        {/* Grouped by layer, and shorter than it was. Six groups running to ~40 entries
+            read as keyword stuffing; anything used on exactly one project now lives in
+            that project's stack tags instead. */}
         <div className="mx-auto mt-8 max-w-4xl space-y-4">
-          <Group label="Core" hint="what I build with daily">
-            <TileGrid items={CORE} />
+          <Group label="Backend" hint="where most of the shipped work lives">
+            <TileGrid items={BACKEND} />
           </Group>
 
-          <Group label="Also work with">
-            <TileGrid items={ALSOUSE} />
+          <Group label="Frontend">
+            <TileGrid items={FRONTEND} />
+          </Group>
+
+          <Group label="Architecture & platform" hint="the parts worth asking me about">
+            <Pills items={CONCEPTS} />
           </Group>
 
           <Group label="Currently learning">
             <TileGrid items={LEARNING} />
           </Group>
 
-          <Group label="Concepts & practices">
-            <Pills items={CONCEPTS} />
-          </Group>
-
           <Group label="Tools">
             <TileGrid items={TOOLS} compact />
-          </Group>
-
-          <Group label="AI-assisted development">
-            <Pills items={AITOOLS} tone="gray" />
           </Group>
         </div>
       </Fade>

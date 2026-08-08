@@ -19,9 +19,14 @@ function SectionShell({ tone = "a", fullHeight = false, id, children }) {
   // sits on top of the heading the visitor just jumped to.
   const anchor = id ? "scroll-mt-[var(--nav-h)]" : ""
 
+  // A full-height section is already sized to the viewport, so the standard py-16 is
+  // 128px of padding competing with the content for a fixed budget — on a 800px-tall
+  // laptop that pushed the hero past the fold and hid its own scroll cue.
+  const pad = fullHeight ? "py-8" : "py-16"
+
   return (
     <section id={id} className={`transition-colors duration-300 ${TONES[tone]} ${fill} ${anchor}`}>
-      <div className="w-full px-5 py-16 md:px-20 lg:px-40">{children}</div>
+      <div className={`w-full px-5 ${pad} md:px-20 lg:px-40`}>{children}</div>
     </section>
   )
 }

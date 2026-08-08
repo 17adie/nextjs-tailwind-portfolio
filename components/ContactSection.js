@@ -8,7 +8,10 @@ import { Fade } from "react-awesome-reveal"
 import { ThreeDots } from "react-loading-icons"
 import ReCAPTCHA from "react-google-recaptcha"
 import { useTheme } from "next-themes"
-import { MdSend } from "react-icons/md"
+import { MdSend, MdOutlineMail, MdContentCopy } from "react-icons/md"
+import { AiFillLinkedin } from "react-icons/ai"
+import SectionHeading from "./SectionHeading"
+import { SITE } from "../data/site"
 
 // When unset the form still works, just without the captcha — that keeps local dev
 // running before the key exists. EmailJS rejects the send if the template requires
@@ -110,9 +113,49 @@ function ContactSection() {
   }
 
   return (
-    <SectionShell tone="a" id={SECTIONS.contact.id}>
-      <h2 className="text-2xl font-bold mb-6 text-center">Contact me</h2>
-      <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded"></hr>
+    <SectionShell tone="b" id={SECTIONS.contact.id}>
+      <SectionHeading eyebrow="Contact" title="Get in touch" subtitle={`${SITE.availability}. The fastest way to reach me is email — or use the form below.`} />
+
+      {/* The address in plain text, because the form used to be the only channel on the
+          page. Plenty of reviewers won't fill in a form, and this one depends on a
+          third-party service whose Gmail authorisation expires periodically — when that
+          happens every message silently fails. An address can't break. */}
+      <div className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a
+          href={`mailto:${SITE.email}?subject=${encodeURIComponent("Opportunity for you")}`}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-teal-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-600 sm:w-auto"
+        >
+          <MdOutlineMail className="text-lg" />
+          {SITE.email}
+        </a>
+
+        <button
+          type="button"
+          onClick={() => {
+            navigator.clipboard
+              ?.writeText(SITE.email)
+              .then(() => toast.success("Email address copied.", { toastId: "copy-email" }))
+              // Clipboard access can be refused outright (insecure origin, permission
+              // policy). Failing silently would leave the click looking broken.
+              .catch(() => toast.info(`Copy it manually: ${SITE.email}`, { toastId: "copy-email" }))
+          }}
+          aria-label="Copy email address"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-5 py-3 text-sm font-semibold text-gray-700 transition hover:border-teal-500 hover:text-teal-600 sm:w-auto dark:border-gray-600 dark:text-gray-200 dark:hover:border-teal-400 dark:hover:text-teal-400"
+        >
+          <MdContentCopy />
+          Copy
+        </button>
+
+        <a
+          href="https://www.linkedin.com/in/aldrinefacistol/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-5 py-3 text-sm font-semibold text-gray-700 transition hover:border-teal-500 hover:text-teal-600 sm:w-auto dark:border-gray-600 dark:text-gray-200 dark:hover:border-teal-400 dark:hover:text-teal-400"
+        >
+          <AiFillLinkedin className="text-lg" />
+          LinkedIn
+        </a>
+      </div>
 
       <Fade>
         {/* Same panel treatment as the Tech Stack groups: rounded-2xl, hairline border,
