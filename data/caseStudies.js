@@ -130,7 +130,6 @@ export const CASE_STUDIES = {
       { label: "Role", value: "Full-Stack Developer" },
       { label: "Team", value: "2 developers" },
       { label: "Users", value: "Applicants, evaluators, RO admin" },
-      { label: "Status", value: "Maintained in production" },
     ],
     problem: [
       "The three permit tracks were each broken in a different way. Exclusion and Exemption were being kept in Excel — evaluators had to open a spreadsheet to check where an applicant stood, the same applicant could be entered twice without anyone noticing, and following a single case as it moved between evaluators was slow.",
